@@ -1,0 +1,92 @@
+[Mon Nov 05 12:05:18 2012] [error] [client 127.0.0.1] PHP Parse error:  syntax error, unexpected '=', expecting ')' in /home/killian/workspace/compagnie/application/controllers/ModeleController.php on line 24
+[Mon Nov 05 12:05:18 2012] [error] [client 127.0.0.1] PHP Stack trace:
+[Mon Nov 05 12:05:18 2012] [error] [client 127.0.0.1] PHP   1. {main}() /home/killian/workspace/compagnie/public/index.php:0
+[Mon Nov 05 12:05:18 2012] [error] [client 127.0.0.1] PHP   2. Zend_Application->run() /home/killian/workspace/compagnie/public/index.php:21
+[Mon Nov 05 12:05:18 2012] [error] [client 127.0.0.1] PHP   3. Bootstrap->run() /home/killian/workspace/compagnie/library/Zend/Application.php:366
+[Mon Nov 05 12:05:18 2012] [error] [client 127.0.0.1] PHP   4. Zend_Application_Bootstrap_Bootstrap->run() /home/killian/workspace/compagnie/application/Bootstrap.php:11
+[Mon Nov 05 12:05:18 2012] [error] [client 127.0.0.1] PHP   5. Zend_Controller_Front->dispatch() /home/killian/workspace/compagnie/library/Zend/Application/Bootstrap/Bootstrap.php:97
+[Mon Nov 05 12:05:18 2012] [error] [client 127.0.0.1] PHP   6. Zend_Controller_Dispatcher_Standard->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Front.php:954
+[Mon Nov 05 12:05:18 2012] [error] [client 127.0.0.1] PHP   7. Zend_Controller_Dispatcher_Standard->loadClass() /home/killian/workspace/compagnie/library/Zend/Controller/Dispatcher/Standard.php:262
+[Mon Nov 05 12:05:30 2012] [error] [client 127.0.0.1] PHP Parse error:  syntax error, unexpected '=', expecting ')' in /home/killian/workspace/compagnie/application/controllers/ModeleController.php on line 24
+[Mon Nov 05 12:05:30 2012] [error] [client 127.0.0.1] PHP Stack trace:
+[Mon Nov 05 12:05:30 2012] [error] [client 127.0.0.1] PHP   1. {main}() /home/killian/workspace/compagnie/public/index.php:0
+[Mon Nov 05 12:05:30 2012] [error] [client 127.0.0.1] PHP   2. Zend_Application->run() /home/killian/workspace/compagnie/public/index.php:21
+[Mon Nov 05 12:05:30 2012] [error] [client 127.0.0.1] PHP   3. Bootstrap->run() /home/killian/workspace/compagnie/library/Zend/Application.php:366
+[Mon Nov 05 12:05:30 2012] [error] [client 127.0.0.1] PHP   4. Zend_Application_Bootstrap_Bootstrap->run() /home/killian/workspace/compagnie/application/Bootstrap.php:11
+[Mon Nov 05 12:05:30 2012] [error] [client 127.0.0.1] PHP   5. Zend_Controller_Front->dispatch() /home/killian/workspace/compagnie/library/Zend/Application/Bootstrap/Bootstrap.php:97
+[Mon Nov 05 12:05:30 2012] [error] [client 127.0.0.1] PHP   6. Zend_Controller_Dispatcher_Standard->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Front.php:954
+[Mon Nov 05 12:05:30 2012] [error] [client 127.0.0.1] PHP   7. Zend_Controller_Dispatcher_Standard->loadClass() /home/killian/workspace/compagnie/library/Zend/Controller/Dispatcher/Standard.php:262
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP Notice:  Undefined variable: tableModele in /home/killian/workspace/compagnie/application/controllers/ModeleController.php on line 27
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP Stack trace:
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP   1. {main}() /home/killian/workspace/compagnie/public/index.php:0
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP   2. Zend_Application->run() /home/killian/workspace/compagnie/public/index.php:21
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP   3. Bootstrap->run() /home/killian/workspace/compagnie/library/Zend/Application.php:366
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP   4. Zend_Application_Bootstrap_Bootstrap->run() /home/killian/workspace/compagnie/application/Bootstrap.php:11
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP   5. Zend_Controller_Front->dispatch() /home/killian/workspace/compagnie/library/Zend/Application/Bootstrap/Bootstrap.php:97
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP   6. Zend_Controller_Dispatcher_Standard->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Front.php:954
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP   7. Zend_Controller_Action->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Dispatcher/Standard.php:295
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP   8. ModeleController->modifierAction() /home/killian/workspace/compagnie/library/Zend/Controller/Action.php:516
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to a member function editModele() on a non-object in /home/killian/workspace/compagnie/application/controllers/ModeleController.php on line 27
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP Stack trace:
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP   1. {main}() /home/killian/workspace/compagnie/public/index.php:0
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP   2. Zend_Application->run() /home/killian/workspace/compagnie/public/index.php:21
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP   3. Bootstrap->run() /home/killian/workspace/compagnie/library/Zend/Application.php:366
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP   4. Zend_Application_Bootstrap_Bootstrap->run() /home/killian/workspace/compagnie/application/Bootstrap.php:11
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP   5. Zend_Controller_Front->dispatch() /home/killian/workspace/compagnie/library/Zend/Application/Bootstrap/Bootstrap.php:97
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP   6. Zend_Controller_Dispatcher_Standard->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Front.php:954
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP   7. Zend_Controller_Action->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Dispatcher/Standard.php:295
+[Mon Nov 05 12:05:36 2012] [error] [client 127.0.0.1] PHP   8. ModeleController->modifierAction() /home/killian/workspace/compagnie/library/Zend/Controller/Action.php:516
+[Mon Nov 05 12:06:27 2012] [error] [client 127.0.0.1] PHP Notice:  Undefined variable: modele_marque in /home/killian/workspace/compagnie/application/models/TModele.php on line 57
+[Mon Nov 05 12:06:27 2012] [error] [client 127.0.0.1] PHP Stack trace:
+[Mon Nov 05 12:06:27 2012] [error] [client 127.0.0.1] PHP   1. {main}() /home/killian/workspace/compagnie/public/index.php:0
+[Mon Nov 05 12:06:27 2012] [error] [client 127.0.0.1] PHP   2. Zend_Application->run() /home/killian/workspace/compagnie/public/index.php:21
+[Mon Nov 05 12:06:27 2012] [error] [client 127.0.0.1] PHP   3. Bootstrap->run() /home/killian/workspace/compagnie/library/Zend/Application.php:366
+[Mon Nov 05 12:06:27 2012] [error] [client 127.0.0.1] PHP   4. Zend_Application_Bootstrap_Bootstrap->run() /home/killian/workspace/compagnie/application/Bootstrap.php:11
+[Mon Nov 05 12:06:27 2012] [error] [client 127.0.0.1] PHP   5. Zend_Controller_Front->dispatch() /home/killian/workspace/compagnie/library/Zend/Application/Bootstrap/Bootstrap.php:97
+[Mon Nov 05 12:06:27 2012] [error] [client 127.0.0.1] PHP   6. Zend_Controller_Dispatcher_Standard->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Front.php:954
+[Mon Nov 05 12:06:27 2012] [error] [client 127.0.0.1] PHP   7. Zend_Controller_Action->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Dispatcher/Standard.php:295
+[Mon Nov 05 12:06:27 2012] [error] [client 127.0.0.1] PHP   8. ModeleController->modifierAction() /home/killian/workspace/compagnie/library/Zend/Controller/Action.php:516
+[Mon Nov 05 12:06:27 2012] [error] [client 127.0.0.1] PHP   9. TModele->editModele() /home/killian/workspace/compagnie/application/controllers/ModeleController.php:28
+[Mon Nov 05 12:12:45 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined method Zend_Db_Table_Rowset::fetchRow() in /home/killian/workspace/compagnie/application/models/TModele.php on line 74
+[Mon Nov 05 12:12:45 2012] [error] [client 127.0.0.1] PHP Stack trace:
+[Mon Nov 05 12:12:45 2012] [error] [client 127.0.0.1] PHP   1. {main}() /home/killian/workspace/compagnie/public/index.php:0
+[Mon Nov 05 12:12:45 2012] [error] [client 127.0.0.1] PHP   2. Zend_Application->run() /home/killian/workspace/compagnie/public/index.php:21
+[Mon Nov 05 12:12:45 2012] [error] [client 127.0.0.1] PHP   3. Bootstrap->run() /home/killian/workspace/compagnie/library/Zend/Application.php:366
+[Mon Nov 05 12:12:45 2012] [error] [client 127.0.0.1] PHP   4. Zend_Application_Bootstrap_Bootstrap->run() /home/killian/workspace/compagnie/application/Bootstrap.php:11
+[Mon Nov 05 12:12:45 2012] [error] [client 127.0.0.1] PHP   5. Zend_Controller_Front->dispatch() /home/killian/workspace/compagnie/library/Zend/Application/Bootstrap/Bootstrap.php:97
+[Mon Nov 05 12:12:45 2012] [error] [client 127.0.0.1] PHP   6. Zend_Controller_Dispatcher_Standard->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Front.php:954
+[Mon Nov 05 12:12:45 2012] [error] [client 127.0.0.1] PHP   7. Zend_Controller_Action->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Dispatcher/Standard.php:295
+[Mon Nov 05 12:12:45 2012] [error] [client 127.0.0.1] PHP   8. ModeleController->indexAction() /home/killian/workspace/compagnie/library/Zend/Controller/Action.php:516
+[Mon Nov 05 12:12:45 2012] [error] [client 127.0.0.1] PHP   9. TModele->getModele() /home/killian/workspace/compagnie/application/controllers/ModeleController.php:13
+[Mon Nov 05 12:12:49 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined method Zend_Db_Table_Rowset::fetchOne() in /home/killian/workspace/compagnie/application/models/TModele.php on line 74
+[Mon Nov 05 12:12:49 2012] [error] [client 127.0.0.1] PHP Stack trace:
+[Mon Nov 05 12:12:49 2012] [error] [client 127.0.0.1] PHP   1. {main}() /home/killian/workspace/compagnie/public/index.php:0
+[Mon Nov 05 12:12:49 2012] [error] [client 127.0.0.1] PHP   2. Zend_Application->run() /home/killian/workspace/compagnie/public/index.php:21
+[Mon Nov 05 12:12:49 2012] [error] [client 127.0.0.1] PHP   3. Bootstrap->run() /home/killian/workspace/compagnie/library/Zend/Application.php:366
+[Mon Nov 05 12:12:49 2012] [error] [client 127.0.0.1] PHP   4. Zend_Application_Bootstrap_Bootstrap->run() /home/killian/workspace/compagnie/application/Bootstrap.php:11
+[Mon Nov 05 12:12:49 2012] [error] [client 127.0.0.1] PHP   5. Zend_Controller_Front->dispatch() /home/killian/workspace/compagnie/library/Zend/Application/Bootstrap/Bootstrap.php:97
+[Mon Nov 05 12:12:49 2012] [error] [client 127.0.0.1] PHP   6. Zend_Controller_Dispatcher_Standard->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Front.php:954
+[Mon Nov 05 12:12:49 2012] [error] [client 127.0.0.1] PHP   7. Zend_Controller_Action->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Dispatcher/Standard.php:295
+[Mon Nov 05 12:12:49 2012] [error] [client 127.0.0.1] PHP   8. ModeleController->indexAction() /home/killian/workspace/compagnie/library/Zend/Controller/Action.php:516
+[Mon Nov 05 12:12:49 2012] [error] [client 127.0.0.1] PHP   9. TModele->getModele() /home/killian/workspace/compagnie/application/controllers/ModeleController.php:13
+[Mon Nov 05 12:13:58 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined method Zend_Db_Table_Rowset::fetchAll() in /home/killian/workspace/compagnie/application/models/TModele.php on line 74
+[Mon Nov 05 12:13:58 2012] [error] [client 127.0.0.1] PHP Stack trace:
+[Mon Nov 05 12:13:58 2012] [error] [client 127.0.0.1] PHP   1. {main}() /home/killian/workspace/compagnie/public/index.php:0
+[Mon Nov 05 12:13:58 2012] [error] [client 127.0.0.1] PHP   2. Zend_Application->run() /home/killian/workspace/compagnie/public/index.php:21
+[Mon Nov 05 12:13:58 2012] [error] [client 127.0.0.1] PHP   3. Bootstrap->run() /home/killian/workspace/compagnie/library/Zend/Application.php:366
+[Mon Nov 05 12:13:58 2012] [error] [client 127.0.0.1] PHP   4. Zend_Application_Bootstrap_Bootstrap->run() /home/killian/workspace/compagnie/application/Bootstrap.php:11
+[Mon Nov 05 12:13:58 2012] [error] [client 127.0.0.1] PHP   5. Zend_Controller_Front->dispatch() /home/killian/workspace/compagnie/library/Zend/Application/Bootstrap/Bootstrap.php:97
+[Mon Nov 05 12:13:58 2012] [error] [client 127.0.0.1] PHP   6. Zend_Controller_Dispatcher_Standard->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Front.php:954
+[Mon Nov 05 12:13:58 2012] [error] [client 127.0.0.1] PHP   7. Zend_Controller_Action->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Dispatcher/Standard.php:295
+[Mon Nov 05 12:13:58 2012] [error] [client 127.0.0.1] PHP   8. ModeleController->indexAction() /home/killian/workspace/compagnie/library/Zend/Controller/Action.php:516
+[Mon Nov 05 12:13:58 2012] [error] [client 127.0.0.1] PHP   9. TModele->getModele() /home/killian/workspace/compagnie/application/controllers/ModeleController.php:13
+[Mon Nov 05 12:32:42 2012] [error] [client 127.0.0.1] PHP Fatal error:  Call to undefined method TModele::getSomeAvions() in /home/killian/workspace/compagnie/application/controllers/ModeleController.php on line 15
+[Mon Nov 05 12:32:42 2012] [error] [client 127.0.0.1] PHP Stack trace:
+[Mon Nov 05 12:32:42 2012] [error] [client 127.0.0.1] PHP   1. {main}() /home/killian/workspace/compagnie/public/index.php:0
+[Mon Nov 05 12:32:42 2012] [error] [client 127.0.0.1] PHP   2. Zend_Application->run() /home/killian/workspace/compagnie/public/index.php:21
+[Mon Nov 05 12:32:42 2012] [error] [client 127.0.0.1] PHP   3. Bootstrap->run() /home/killian/workspace/compagnie/library/Zend/Application.php:366
+[Mon Nov 05 12:32:42 2012] [error] [client 127.0.0.1] PHP   4. Zend_Application_Bootstrap_Bootstrap->run() /home/killian/workspace/compagnie/application/Bootstrap.php:11
+[Mon Nov 05 12:32:42 2012] [error] [client 127.0.0.1] PHP   5. Zend_Controller_Front->dispatch() /home/killian/workspace/compagnie/library/Zend/Application/Bootstrap/Bootstrap.php:97
+[Mon Nov 05 12:32:42 2012] [error] [client 127.0.0.1] PHP   6. Zend_Controller_Dispatcher_Standard->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Front.php:954
+[Mon Nov 05 12:32:42 2012] [error] [client 127.0.0.1] PHP   7. Zend_Controller_Action->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Dispatcher/Standard.php:295
+[Mon Nov 05 12:32:42 2012] [error] [client 127.0.0.1] PHP   8. ModeleController->indexAction() /home/killian/workspace/compagnie/library/Zend/Controller/Action.php:516

@@ -1,0 +1,33 @@
+<?php if( EMPTY($_POST['idUser']) || EMPTY($_POST['pwUser'])){
+
+						$idUser = strip_tags($_POST['idUser']);
+						$pwUser = strip_tags($_POST['pwUser']);
+												
+						echo '<br /><br /><form Method="POST" Action="" class="form">
+						<fieldset>
+						 	<label for="idUser">Votre ID :</label><br /><input type="text" name="idUser" id="idUser" size="28" autofocus onblur = "verifNom(this)" value = "'.$idUser.'" /><br /><br /><br />
+							<label for="pwUser">Votre password :</label><br /><input type="password" name="pwUser" id="pwUser" size="28" value = "'.$pwUser.'" /><br /><br />
+							<input type=\'submit\' value=\'connexion\'/>
+						</fieldset>
+					</form>';
+					
+				}	
+					else if( !EMPTY($_POST['idUser']) && !EMPTY($_POST['pwUser'])) {
+
+						try{
+							/************* On récupère les données ****************/
+							$idUser = ($_POST['idUser']);
+							$pwUser = ($_POST['pwUser']);
+							
+							/************* On ne prend pas en compte l'exécution des balises possible *****************/
+							$idUser = htmlspecialchars($idUser);
+							$pwUser = htmlspecialchars($pwUser);
+			
+							/************* On reset le contenue ****************/
+							?> <script>window.location = "contact.php";</script><?php
+						}
+						catch(Exception $e){
+							// En cas d'erreur précédemment, on affiche un message et on arrête tout
+								die('Erreur : '.$e->getMessage());
+						}
+					}

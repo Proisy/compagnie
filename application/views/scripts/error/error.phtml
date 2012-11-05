@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Zend Framework Default Application</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <?php echo $this->headLink()->appendStylesheet('/css/error.css') ?>
+</head>
+<body>
+<div class="bodyError">
+  <br /><br /><br /><br />
+  <h1>Une erreur est survenue</h1><br /><br />
+  <h2><?php echo $this->message ?></h2>
+ 
+  <?php if ('development' == $this->env): ?>
+ 
+  <h3>Exception information:</h3>
+  <p>
+      <b>Message:</b> <?php echo $this->exception->getMessage() ?>
+  </p>
+ 
+  <h3>Stack trace:</h3>
+  <pre><?php echo $this->exception->getTraceAsString() ?>
+  </pre>
+ 
+  <h3>Request Parameters:</h3>
+  <pre><?php echo var_export($this->request->getParams(), 1) ?>
+  </pre>
+  <?php endif ?>
+</div> 
+</body>
+</html>
