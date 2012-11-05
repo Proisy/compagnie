@@ -90,3 +90,52 @@
 [Mon Nov 05 12:32:42 2012] [error] [client 127.0.0.1] PHP   6. Zend_Controller_Dispatcher_Standard->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Front.php:954
 [Mon Nov 05 12:32:42 2012] [error] [client 127.0.0.1] PHP   7. Zend_Controller_Action->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Dispatcher/Standard.php:295
 [Mon Nov 05 12:32:42 2012] [error] [client 127.0.0.1] PHP   8. ModeleController->indexAction() /home/killian/workspace/compagnie/library/Zend/Controller/Action.php:516
+[Mon Nov 05 19:53:37 2012] [error] [client 127.0.0.1] PHP Parse error:  syntax error, unexpected T_OBJECT_OPERATOR in /home/killian/workspace/compagnie/application/models/TModele.php on line 67
+[Mon Nov 05 19:53:37 2012] [error] [client 127.0.0.1] PHP Stack trace:
+[Mon Nov 05 19:53:37 2012] [error] [client 127.0.0.1] PHP   1. {main}() /home/killian/workspace/compagnie/public/index.php:0
+[Mon Nov 05 19:53:37 2012] [error] [client 127.0.0.1] PHP   2. Zend_Application->run() /home/killian/workspace/compagnie/public/index.php:21
+[Mon Nov 05 19:53:37 2012] [error] [client 127.0.0.1] PHP   3. Bootstrap->run() /home/killian/workspace/compagnie/library/Zend/Application.php:366
+[Mon Nov 05 19:53:37 2012] [error] [client 127.0.0.1] PHP   4. Zend_Application_Bootstrap_Bootstrap->run() /home/killian/workspace/compagnie/application/Bootstrap.php:11
+[Mon Nov 05 19:53:37 2012] [error] [client 127.0.0.1] PHP   5. Zend_Controller_Front->dispatch() /home/killian/workspace/compagnie/library/Zend/Application/Bootstrap/Bootstrap.php:97
+[Mon Nov 05 19:53:37 2012] [error] [client 127.0.0.1] PHP   6. Zend_Controller_Dispatcher_Standard->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Front.php:954
+[Mon Nov 05 19:53:37 2012] [error] [client 127.0.0.1] PHP   7. Zend_Controller_Action->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Dispatcher/Standard.php:295
+[Mon Nov 05 19:53:37 2012] [error] [client 127.0.0.1] PHP   8. ModeleController->indexAction() /home/killian/workspace/compagnie/library/Zend/Controller/Action.php:516
+[Mon Nov 05 19:53:37 2012] [error] [client 127.0.0.1] PHP   9. Zend_Loader_Autoloader::autoload() /home/killian/workspace/compagnie/library/Zend/Loader/Autoloader.php:0
+[Mon Nov 05 19:53:37 2012] [error] [client 127.0.0.1] PHP  10. call_user_func() /home/killian/workspace/compagnie/library/Zend/Loader/Autoloader.php:124
+[Mon Nov 05 19:53:37 2012] [error] [client 127.0.0.1] PHP  11. Zend_Loader_Autoloader->_autoload() /home/killian/workspace/compagnie/library/Zend/Loader/Autoloader.php:0
+[Mon Nov 05 19:53:37 2012] [error] [client 127.0.0.1] PHP  12. call_user_func() /home/killian/workspace/compagnie/library/Zend/Loader/Autoloader.php:479
+[Mon Nov 05 19:53:37 2012] [error] [client 127.0.0.1] PHP  13. Zend_Loader::loadClass() /home/killian/workspace/compagnie/library/Zend/Loader/Autoloader.php:0
+[Mon Nov 05 19:53:37 2012] [error] [client 127.0.0.1] PHP  14. Zend_Loader::loadFile() /home/killian/workspace/compagnie/library/Zend/Loader.php:94
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP Notice:  Undefined variable: _primary in /home/killian/workspace/compagnie/application/models/TModele.php on line 67
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP Stack trace:
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   1. {main}() /home/killian/workspace/compagnie/public/index.php:0
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   2. Zend_Application->run() /home/killian/workspace/compagnie/public/index.php:21
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   3. Bootstrap->run() /home/killian/workspace/compagnie/library/Zend/Application.php:366
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   4. Zend_Application_Bootstrap_Bootstrap->run() /home/killian/workspace/compagnie/application/Bootstrap.php:11
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   5. Zend_Controller_Front->dispatch() /home/killian/workspace/compagnie/library/Zend/Application/Bootstrap/Bootstrap.php:97
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   6. Zend_Controller_Dispatcher_Standard->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Front.php:954
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   7. Zend_Controller_Action->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Dispatcher/Standard.php:295
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   8. ModeleController->indexAction() /home/killian/workspace/compagnie/library/Zend/Controller/Action.php:516
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   9. TModele->getModele() /home/killian/workspace/compagnie/application/controllers/ModeleController.php:13
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP Fatal error:  Cannot access empty property in /home/killian/workspace/compagnie/application/models/TModele.php on line 67
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP Stack trace:
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   1. {main}() /home/killian/workspace/compagnie/public/index.php:0
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   2. Zend_Application->run() /home/killian/workspace/compagnie/public/index.php:21
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   3. Bootstrap->run() /home/killian/workspace/compagnie/library/Zend/Application.php:366
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   4. Zend_Application_Bootstrap_Bootstrap->run() /home/killian/workspace/compagnie/application/Bootstrap.php:11
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   5. Zend_Controller_Front->dispatch() /home/killian/workspace/compagnie/library/Zend/Application/Bootstrap/Bootstrap.php:97
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   6. Zend_Controller_Dispatcher_Standard->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Front.php:954
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   7. Zend_Controller_Action->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Dispatcher/Standard.php:295
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   8. ModeleController->indexAction() /home/killian/workspace/compagnie/library/Zend/Controller/Action.php:516
+[Mon Nov 05 19:54:01 2012] [error] [client 127.0.0.1] PHP   9. TModele->getModele() /home/killian/workspace/compagnie/application/controllers/ModeleController.php:13
+[Mon Nov 05 20:06:29 2012] [error] [client 127.0.0.1] PHP Notice:  Undefined offset: 0 in /home/killian/workspace/compagnie/application/models/TModele.php on line 67
+[Mon Nov 05 20:06:29 2012] [error] [client 127.0.0.1] PHP Stack trace:
+[Mon Nov 05 20:06:29 2012] [error] [client 127.0.0.1] PHP   1. {main}() /home/killian/workspace/compagnie/public/index.php:0
+[Mon Nov 05 20:06:29 2012] [error] [client 127.0.0.1] PHP   2. Zend_Application->run() /home/killian/workspace/compagnie/public/index.php:21
+[Mon Nov 05 20:06:29 2012] [error] [client 127.0.0.1] PHP   3. Bootstrap->run() /home/killian/workspace/compagnie/library/Zend/Application.php:366
+[Mon Nov 05 20:06:29 2012] [error] [client 127.0.0.1] PHP   4. Zend_Application_Bootstrap_Bootstrap->run() /home/killian/workspace/compagnie/application/Bootstrap.php:11
+[Mon Nov 05 20:06:29 2012] [error] [client 127.0.0.1] PHP   5. Zend_Controller_Front->dispatch() /home/killian/workspace/compagnie/library/Zend/Application/Bootstrap/Bootstrap.php:97
+[Mon Nov 05 20:06:29 2012] [error] [client 127.0.0.1] PHP   6. Zend_Controller_Dispatcher_Standard->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Front.php:954
+[Mon Nov 05 20:06:29 2012] [error] [client 127.0.0.1] PHP   7. Zend_Controller_Action->dispatch() /home/killian/workspace/compagnie/library/Zend/Controller/Dispatcher/Standard.php:295
+[Mon Nov 05 20:06:29 2012] [error] [client 127.0.0.1] PHP   8. ModeleController->indexAction() /home/killian/workspace/compagnie/library/Zend/Controller/Action.php:516
+[Mon Nov 05 20:06:29 2012] [error] [client 127.0.0.1] PHP   9. TModele->getModele() /home/killian/workspace/compagnie/application/controllers/ModeleController.php:13

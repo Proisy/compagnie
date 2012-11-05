@@ -53,32 +53,35 @@ class TModele extends Zend_Db_Table_Abstract {
 	 * Récupère tous les modèles
 	 * @return array
 	 */
-	public function getAllModeles() {
-		return $this->fetchAll()->toArray();
+	public function getAllModeles($columns='*') {
+		$requete = $this->select()->from($this, $columns);
+		return $this->fetchAll($requete)->toArray();
+	}
+
+	/**
+	 * Récupère un modèle selon son idate(format)
+	 * @param int $id
+	 * @param array $columns
+	 * @return array
+	 */
+	public function getModele($id,$columns='*') {
+		$requete = $this->select()->from($this, $columns)->where('id_modele = ?', $id);
+		return $this->fetchAll($requete)->toArray();
 	}
 
 	/**
 	 * Récupère $maxInt-$minInt modèles à partir du $minInt modèle
 	 * @param int $minInt
 	 * @param int $maxInt
+	 * @param array $columns
 	 * @return array
 	 */
-	public function getSomeModeles($minInt=0, $maxInt=20) {
-		$requete = $this->select()->from($this)
+	public function getSomeModeles($minInt=0, $maxInt=20,$columns='*') {
+		$requete = $this->select()->from($this, $columns)
 			->order('id_modele')
 			->limit($maxInt-$minInt, $minInt);
 		return $this->fetchAll($requete)->toArray();
 	}
-
-	/**
-	 * Récupère un modèle selon son id
-	 * @param int $id
-	 * @return array
-	 */
-	public function getModele($id) {
-		return $this->find($id)->current()->toArray();
-	}
-
 
 	/**
 	 * Récupère des modèles en fonction des paramètres passés
@@ -87,11 +90,11 @@ class TModele extends Zend_Db_Table_Abstract {
 	 *        		'column' => ?,
 	 *          	'operator' => ?,
 	 *          	'value' => ? )
-	 * 
+	 * @param array $columns
 	 * @return array
 	 */
-	public function getModelesBy($data) {
-		$requete = $this->select()->from($this);
+	public function getModelesBy($data,$columns='*') {
+		$requete = $this->select()->from($this, $columns);
 		foreach ($data as $arr) {
 			$requete->where($arr['column']. ' ' .$arr['operator'] .' ?', $arr['value']);
 		}
