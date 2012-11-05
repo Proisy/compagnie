@@ -1,4 +1,15 @@
 <?php
+/**
+ * Structure de la table:
+ * 		id_modele				INT
+ * 		modele_marque			VARCHAR
+ *  	modele_reference		VARCHAR
+ *  	modele_rayon			INT
+ *  	modele_piste_att		INT
+ *  	modele_piste_dec		INT
+ *  	modele_nb_passagers		INT
+ *  	modele_diff_revision	INT
+ */
 class TModele extends Zend_Db_Table_Abstract {
 
 	protected $_name = 'modele';
@@ -72,17 +83,18 @@ class TModele extends Zend_Db_Table_Abstract {
 	/**
 	 * Récupère des modèles en fonction des paramètres passés
 	 * @param array $data
-	 * @return array
+	 *        $data[] = array(
+	 *        		'column' => ?,
+	 *          	'operator' => ?,
+	 *          	'value' => ? )
 	 * 
-	 * @todo à revoir
+	 * @return array
 	 */
 	public function getModelesBy($data) {
-		if(is_array($data)){
-			$requete = $this->select()->from($this);
-			foreach ($data as $key => $value) {
-				$requete->where($key.' = ?',$value);
-			}
-			return $this->fetchAll($requete)->toArray();
+		$requete = $this->select()->from($this);
+		foreach ($data as $arr) {
+			$requete->where($arr['column']. ' ' .$arr['operator'] .' ?', $arr['value']);
 		}
+		return $this->fetchAll($requete)->toArray();
 	}
 }

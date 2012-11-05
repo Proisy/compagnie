@@ -1,4 +1,11 @@
 <?php
+/**
+ * Structure de la table:
+ * 		avion_immatriculation		INT
+ * 		id_modele					INT
+ *  	avion_heure_vol_total		INT
+ *  	avion_heure_vol_revision	INT
+ */
 class TAvion extends Zend_Db_Table_Abstract {
 
 	protected $_name = 'avion';

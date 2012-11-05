@@ -1,4 +1,10 @@
 <?php
+/**
+ * Structure de la table:
+ * 		id_ville				INT
+ * 		ville_nom				VARCHAR
+ *  	id_pays					INT
+ */
 class TVille extends Zend_Db_Table_Abstract {
 
 	protected $_name = 'ville';

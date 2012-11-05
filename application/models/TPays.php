@@ -1,4 +1,10 @@
 <?php
+/**
+ * Structure de la table:
+ * 		id_pays					INT
+ * 		pays_nom				VARCHAR
+ *  	pays_continent			VARCHAR
+ */
 class TPays extends Zend_Db_Table_Abstract {
 
 	protected $_name = 'pays';

@@ -10,25 +10,31 @@ class ModeleController extends Zend_Controller_Action
 		// $this->view->listeModeles = $this->getAllModeles();   
 		$tableModele = new TModele;
 		// var_dump($tableModele->getModele(2));
-		// var_dump($tableModele->getModelesBy(array('id_modele'=>'1')));
-		var_dump($tableModele->getSomeModeles());
+		// var_dump($tableModele->getSomeModeles());
+		var_dump($tableModele->getModelesBy(array(
+				array('column' => 'modele_rayon',
+					'operator' => '>=',
+					'value' => '1900' )
+				)
+			)
+		);
 	}
 
 	public function ajouterAction() {
 		$tableModele = new TModele;
-		$tableModele->addModele('Airbus', 'A380', 2500, 300, 450, 600, 800);
-    }
+		$data = array('modele_marque'=>'Airbus','modele_reference'=>'A310','modele_rayon'=>1900,'modele_piste_att'=>300,'modele_piste_dec'=>250,'modele_nb_passagers'=>300,'modele_diff_revision'=>600);
+		$tableModele->addModele($data);
+	}
 
-    public function modifierAction() {
-    	$tableModele = new TModele;
-    	$arr = array(
-    		'modele_marque' => 'Boeing'
-    		);
-
+	public function modifierAction() {
+		$tableModele = new TModele;
+		$arr = array(
+			'modele_marque' => 'Boeing'
+			);
 		$tableModele->editModele(2,$arr);
-    }
+	}
 
-    public function supprimerAction() {
+	public function supprimerAction() {
 		
-    }
+	}
 }

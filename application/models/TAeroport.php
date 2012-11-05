@@ -1,14 +1,15 @@
 <?php
+/**
+ * Structure de la table:
+ * 		aeroport_trigramme		VARCHAR
+ * 		aeroport_nom			VARCHAR
+ *  	aeroport_terminaux		INT
+ *  	aeroport_longueur_piste	INT
+ */
 class TAeroport extends Zend_Db_Table_Abstract {
 
 	protected $_name = 'aeroport';
 	protected $_primary = 'aeroport_trigramme';
-	protected $_referenceMap = array(
-		'Ville'=>array(
-			'columns'=>'id_ville',
-			'refTableClass'=>'TVille'
-		)
-	);
 
 	/**
 	 * Ajoute un aeroport
