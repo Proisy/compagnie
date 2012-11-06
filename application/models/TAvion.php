@@ -52,6 +52,7 @@ class TAvion extends Zend_Db_Table_Abstract {
 
 	/**
 	 * Récupère tous les avions
+	 * @param array $columns
 	 * @return array
 	 */
 	public function getAllAvions($columns='*') {
@@ -62,6 +63,7 @@ class TAvion extends Zend_Db_Table_Abstract {
 	/**
 	 * Récupère un avion selon son id
 	 * @param int $id
+	 * @param array $columns
 	 * @return array
 	 */
 	public function getAvion($id, $columns='*') {
@@ -74,6 +76,7 @@ class TAvion extends Zend_Db_Table_Abstract {
 	 * Récupère $maxInt-$minInt avions à partir du $minInt avion
 	 * @param int $minInt
 	 * @param int $maxInt
+	 * @param array $columns
 	 * @return array
 	 */
 	public function getSomeAvions($minInt=0, $maxInt=20, $columns='*') {
@@ -86,7 +89,8 @@ class TAvion extends Zend_Db_Table_Abstract {
 	/**
 	 * Récupère des avions en fonction des paramètres passés
 	 * @param array $data
-	 * @return arrayx
+	 * @param array $columns
+	 * @return array
 	 */
 	public function getAvionsBy($data, $columns='*') {
 		$requete = $this->select()->from($this, $columns);
