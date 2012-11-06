@@ -1,0 +1,31 @@
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>INSSET Airlines</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<?php  echo $this->headLink()->appendStylesheet('../public/css/global.css')?>
+	</head>
+	<body>
+		<div id="page">
+			<header>
+				<h1>INSSET AIRLINES</h1>
+			</header>
+			<nav>
+				<div id="menu">
+					<?php echo $this->layout()->menuMaintenance; ?>
+				</div>
+			</nav>
+			<section>
+				<div id="apps">
+					<h1>Gestion des avions</h1>
+					<p>
+						<?php //echo $this->layout()->content?>
+					</p>
+				</div>
+			</section>
+			<footer>
+				<p><img src="http://framework.zend.com/images/PoweredBy_ZF_4LightBG.png" /></p>
+			</footer>
+		</div>
+	</body>
+</html>
