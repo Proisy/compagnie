@@ -23,7 +23,7 @@ class ModeleController extends Zend_Controller_Action
 		$listeInput['modele_diff_revision'] = new Zend_Form_Element_Text('modele_diff_revision');
 
 		$listeInput['modele_marque']->setLabel('Marque')
-									->addValidator(new Zend_Validate_Digits());
+									->addValidator(new Zend_Validate_Alnum());
 		$listeInput['modele_reference']->setLabel('Référence')
 									->addValidator(new Zend_Validate_Digits());
 		$listeInput['modele_rayon']->setLabel('Rayon (en km)')
@@ -46,11 +46,11 @@ class ModeleController extends Zend_Controller_Action
 
 		if($this->getRequest()->isPost()) {
 			$post = $this->getRequest()->getPost();
-			$form->isValid($post);
-			$data = $form->getValues();
-
-			$tableModele = new TModele;
-			$tableModele->addModele($data);
+			if($form->isValid($post)){
+				$data = $form->getValues();
+				$tableModele = new TModele;
+				$tableModele->addModele($data);
+			}
 		}
 		else {
 			$this->view->form = $form;
@@ -87,6 +87,7 @@ class ModeleController extends Zend_Controller_Action
 									->addValidator(new Zend_Validate_Digits());
 		$listeInput['modele_diff_revision']->setLabel('Durée entre deux révisions')
 									->addValidator(new Zend_Validate_Digits());
+
 		$dataOld = $tableModele->getModele($id);
 
 		foreach ($listeInput as $key=>$value) {
@@ -98,10 +99,10 @@ class ModeleController extends Zend_Controller_Action
 		
 		if($this->getRequest()->isPost()) {
 			$post = $this->getRequest()->getPost();
-			$form->isValid($post);
-			$data = $form->getValues();
-
-			$tableModele->editModele($id,$data);
+			if($form->isValid($post)){
+				$data = $form->getValues();
+				$tableModele->editModele($id,$data);
+			}
 		}
 		else {
 			$this->view->form = $form;

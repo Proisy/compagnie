@@ -10,21 +10,47 @@ class AvionController extends Zend_Controller_Action
 	}
 
 	public function ajouterAction() {
+		$tableModele = new TModele;
+		$listeModeles = $tableModele->getAllModeles(array('id_modele','modele_marque','modele_reference'));
+		
 		$form = new Zend_Form;
+
+		$form->setAction('/avion/ajouter/')->setMethod('post');
+
+		$listeInput['avion_immatriculation'] = new Zend_Form_Element_Text('avion_immatriculation');
+		$listeInput['id_modele'] = new Zend_Form_Element_Select('id_modele');
+		$listeInput['avion_heure_vol_total'] = new Zend_Form_Element_Text('avion_heure_vol_total');
+		$listeInput['avion_heure_vol_revision'] = new Zend_Form_Element_Text('avion_heure_vol_revision');
+
+		$listeInput['avion_immatriculation']->setLabel('Immatriculation')
+										->addValidator(new Zend_Validate_Digits());
+		$listeInput['id_modele']->setLabel('Modèle')
+								->addValidator(new Zend_Validate_Digits());
+		foreach ($listeModeles as $key => $value) {
+			$listeInput['id_modele']->addMultiOption($value['id_modele'], $value['modele_marque'].' '.$value['modele_reference']);
+		}
+		$listeInput['avion_heure_vol_total']->setLabel('Heures de vol total de l\'avion')
+										->addValidator(new Zend_Validate_Digits());
+		$listeInput['avion_heure_vol_revision']->setLabel('Heures de vol depuis la dernière révision')
+										->addValidator(new Zend_Validate_Digits());
+
+		foreach ($listeInput as $key=>$value) {
+			$value->setRequired(true);
+			$form->addElement($value);
+		}
+
+		$form->addElement(new Zend_Form_Element_Submit('Valider'));
 
 		if($this->getRequest()->isPost()) {
 			$post = $this->getRequest()->getPost();
-			$form->isValid($post);
-			$data = $monForm->getValues();
-
-			$tableAvion = new TAvion;
-			$tableAvion->addAvion($data);
+			if($form->isValid($post)) {
+				$data = $form->getValues();
+				$tableAvion = new TAvion;
+				$tableAvion->addAvion($data);
+			}
 		}
 		else {
-			$tableModele = new TModele;
-			$listeModeles = $tableModele->getAllModeles(array('id_modele','modele_marque','modele_reference'));
-			
-			echo $form;
+			$this->view->form = $form;
 		}
 	}
 	
@@ -32,21 +58,48 @@ class AvionController extends Zend_Controller_Action
 		$id = $this->getRequest()->getParam('id');
 		$tableAvion = new TAvion;
 
+		$tableModele = new TModele;
+		$listeModeles = $tableModele->getAllModeles(array('id_modele','modele_marque','modele_reference'));
+		
 		$form = new Zend_Form;
+
+		$form->setAction('/avion/modifier/')->setMethod('post');
+
+		$listeInput['avion_immatriculation'] = new Zend_Form_Element_Text('avion_immatriculation');
+		$listeInput['id_modele'] = new Zend_Form_Element_Select('id_modele');
+		$listeInput['avion_heure_vol_total'] = new Zend_Form_Element_Text('avion_heure_vol_total');
+		$listeInput['avion_heure_vol_revision'] = new Zend_Form_Element_Text('avion_heure_vol_revision');
+
+		$listeInput['avion_immatriculation']->setLabel('Immatriculation')
+										->addValidator(new Zend_Validate_Digits());
+		$listeInput['id_modele']->setLabel('Modèle')
+								->addValidator(new Zend_Validate_Digits());
+		foreach ($listeModeles as $key => $value) {
+			$listeInput['id_modele']->addMultiOption($value['id_modele'], $value['modele_marque'].' '.$value['modele_reference']);
+		}
+		$listeInput['avion_heure_vol_total']->setLabel('Heures de vol total de l\'avion')
+										->addValidator(new Zend_Validate_Digits());
+		$listeInput['avion_heure_vol_revision']->setLabel('Heures de vol depuis la dernière révision')
+										->addValidator(new Zend_Validate_Digits());
+
+		$dataOld = $tableAvion->getAvion($id);
+
+		foreach ($listeInput as $key=>$value) {
+			$value->setRequired(true)->setValue($dataOld[$key]);
+			$form->addElement($value);
+		}
+
+		$form->addElement(new Zend_Form_Element_Submit('Valider'));
 
 		if($this->getRequest()->isPost()) {
 			$post = $this->getRequest()->getPost();
-			$form->isValid($post);
-			$data = $monForm->getValues();
-
-			$tableAvion->editAvion($id,$data);
+			if($form->isValid($post)) {
+				$data = $monForm->getValues();
+				$tableAvion->editAvion($id,$data);
+			}
 		}
 		else {
-			$tableModele = new TModele;
-			$listeModeles = $tableModele->getAllModeles(array('id_modele','modele_marque','modele_reference'));
-			
-			$data = $tableAvion->getAvion($id);
-			echo $form;
+			$this->view->form = $form;
 		}
 	}
 	
