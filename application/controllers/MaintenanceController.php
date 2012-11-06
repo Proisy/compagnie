@@ -11,6 +11,6 @@ class maintenanceController extends Zend_Controller_Action
 	}
 	
 	public function menuAction(){
-		$this->_helper->viewRenderer->setResponseSegment('menuMaintenance')
+		$this->_helper->viewRenderer->setResponseSegment('menuMaintenance');
 	}
-	
+}

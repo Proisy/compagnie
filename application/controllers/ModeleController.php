@@ -5,11 +5,13 @@ class ModeleController extends Zend_Controller_Action
 	public function init(){}
 
 	public function indexAction(){
+		$this->_helper->actionStack('menu', 'maintenance', 'default', array());
 		$tableModele = new TModele;
 		$this->view->listeModeles = $tableModele->getAllModeles();
 	}
-
+	
 	public function ajouterAction() {
+		$this->_helper->actionStack('menu', 'maintenance', 'default', array());
 		$form = new Zend_Form;
 
 		$form->setAction('/modele/ajouter/')->setMethod('post');
@@ -58,6 +60,7 @@ class ModeleController extends Zend_Controller_Action
 	}
 
 	public function modifierAction() {
+		$this->_helper->actionStack('menu', 'maintenance', 'default', array());
 		$id = $this->getRequest()->getParam('id');
 		$tableModele = new TModele;
 
@@ -109,6 +112,7 @@ class ModeleController extends Zend_Controller_Action
 	}
 
 	public function supprimerAction() {
+		$this->_helper->actionStack('menu', 'maintenance', 'default', array());
 		$id = $this->getRequest()->getParam('id');
 		$tableModele = new TModele;
 
@@ -120,4 +124,8 @@ class ModeleController extends Zend_Controller_Action
 			echo $form;
 		}
 	}
+	public function menuAction(){
+		$this->_helper->viewRenderer->setResponseSegment('menuMaintenance');
+	}
+
 }
