@@ -21,6 +21,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap{
 		return $session;
 	}
 
+	protected function _initDocType()
+    {
+        $this->bootstrap('View');
+        $view = $this->getResource('View');
+        $view->doctype('HTML5');
+    }
+
 	protected function _initDb() {
 		$db = Zend_Db::factory(Zend_Registry::get('config')->database);
 		Zend_Db_Table_Abstract::setDefaultAdapter($db);
