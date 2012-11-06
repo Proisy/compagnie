@@ -2,9 +2,7 @@
 
 class ModeleController extends Zend_Controller_Action
 {
-	public function init(){
-		
-	}
+	public function init(){}
 
 	public function indexAction(){
 		$tableModele = new TModele;
@@ -13,7 +11,7 @@ class ModeleController extends Zend_Controller_Action
 
 	public function ajouterAction() {
 		$form = new Zend_Form;
-		
+
 		if($this->getRequest()->isPost()) {
 			$post = $this->getRequest()->getPost();
 			$form->isValid($post);
@@ -41,7 +39,7 @@ class ModeleController extends Zend_Controller_Action
 			$tableModele->editModele($id,$data);
 		}
 		else {
-			$data = $tableModele->getModele($id);
+			$this->view->data = $tableModele->getModele($id);
 			echo $form;
 		}
 	}
@@ -49,5 +47,13 @@ class ModeleController extends Zend_Controller_Action
 	public function supprimerAction() {
 		$id = $this->getRequest()->getParam('id');
 		$tableModele = new TModele;
+
+		if($this->getRequest()->isPost()) {
+			$post = $this->getRequest()->getPost();
+			$data = $tableModele->deleteModele($id);
+		}
+		else {
+			echo $form;
+		}
 	}
 }

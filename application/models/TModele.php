@@ -51,6 +51,7 @@ class TModele extends Zend_Db_Table_Abstract {
 
 	/**
 	 * Récupère tous les modèles
+	 * @param array $columns
 	 * @return array
 	 */
 	public function getAllModeles($columns='*') {
@@ -66,7 +67,8 @@ class TModele extends Zend_Db_Table_Abstract {
 	 */
 	public function getModele($id,$columns='*') {
 		$requete = $this->select()->from($this, $columns)->where('id_modele = ?', $id);
-		return $this->fetchAll($requete)->toArray();
+		$data = $this->fetchAll($requete)->toArray();
+		return $data[0];
 	}
 
 	/**

@@ -7,7 +7,6 @@
  *  	avion_heure_vol_revision	INT
  */
 class TAvion extends Zend_Db_Table_Abstract {
-
 	protected $_name = 'avion';
 	protected $_primary = 'avion_immatriculation';
 	protected $_referenceMap = array(
@@ -55,20 +54,8 @@ class TAvion extends Zend_Db_Table_Abstract {
 	 * Récupère tous les avions
 	 * @return array
 	 */
-	public function getAllAvions() {
-		return $this->fetchAll()->toArray();
-	}
-
-	/**
-	 * Récupère $maxInt-$minInt avions à partir du $minInt avion
-	 * @param int $minInt
-	 * @param int $maxInt
-	 * @return array
-	 */
-	public function getSomeAvions($minInt, $maxInt) {
-		$requete = $this->select()->from($this)
-			->order('id_avion')
-			->limit($maxInt-$minInt, $minInt);
+	public function getAllAvions($columns='*') {
+		$requete = $this->select()->from($this, $columns);
 		return $this->fetchAll($requete)->toArray();
 	}
 
@@ -77,16 +64,35 @@ class TAvion extends Zend_Db_Table_Abstract {
 	 * @param int $id
 	 * @return array
 	 */
-	public function getAvion($id) {
-		return $this->find($id)->current()->toArray();
+	public function getAvion($id, $columns='*') {
+		$requete = $this->select()->from($this, $columns)->where('avion_immatriculation = ?', $id);
+		$data = $this->fetchAll($requete)->toArray();
+		return $data[0];
+	}
+
+	/**
+	 * Récupère $maxInt-$minInt avions à partir du $minInt avion
+	 * @param int $minInt
+	 * @param int $maxInt
+	 * @return array
+	 */
+	public function getSomeAvions($minInt=0, $maxInt=20, $columns='*') {
+		$requete = $this->select()->from($this, $columns)
+			->order('id_avion')
+			->limit($maxInt-$minInt, $minInt);
+		return $this->fetchAll($requete)->toArray();
 	}
 
 	/**
 	 * Récupère des avions en fonction des paramètres passés
 	 * @param array $data
-	 * @return array
-	 *
-	 * @todo à refaire
+	 * @return arrayx
 	 */
-	public function getAvionsBy($data) {}
+	public function getAvionsBy($data, $columns='*') {
+		$requete = $this->select()->from($this, $columns);
+		foreach ($data as $arr) {
+			$requete->where($arr['column']. ' ' .$arr['operator'] .' ?', $arr['value']);
+		}
+		return $this->fetchAll($requete)->toArray();
+	}
 }
