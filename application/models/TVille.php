@@ -54,8 +54,9 @@ class TVille extends Zend_Db_Table_Abstract {
 	 * Récupère tous les villes
 	 * @return array
 	 */
-	public function getAllVille() {
-		return $this->fetchAll()->toArray();
+	public function getAllVille($columns='*') {
+		$requete = $this->select()->from($this, $columns);
+		return $this->fetchAll($requete)->toArray();
 	}
 
 	/**
@@ -63,8 +64,10 @@ class TVille extends Zend_Db_Table_Abstract {
 	 * @param int $id
 	 * @return array
 	 */
-	public function getVille($id) {
-		return $this->find($id)->current()->toArray();
+	public function getVille($id, $columns='*') {
+		$requete = $this->select()->from($this, $columns)->where('id_ville = ?', $id);
+		$data = $this->fetchAll($requete)->toArray();
+		return $data[0];
 	}
 
 	/**
@@ -73,8 +76,8 @@ class TVille extends Zend_Db_Table_Abstract {
 	 * @param int $maxInt
 	 * @return array
 	 */
-	public function getSomeVille($minInt, $maxInt) {
-		$requete = $this->select()->from($this)
+	public function getSomeVille($minInt, $maxInt, $columns='*') {
+		$requete = $this->select()->from($this, $columns)
 			->order('id_ville')
 			->limit($maxInt-$minInt, $minInt);
 		return $this->fetchAll($requete)->toArray();
@@ -87,5 +90,11 @@ class TVille extends Zend_Db_Table_Abstract {
 	 *
 	 * @todo à refaire
 	 */
-	public function getVilleBy($data) {}
+	public function getVilleBy($data, $columns='*') {
+		$requete = $this->select()->from($this, $columns);
+		foreach ($data as $arr) {
+			$requete->where($arr['column']. ' ' .$arr['operator'] .' ?', $arr['value']);
+		}
+		return $this->fetchAll($requete)->toArray();
+	}
 }

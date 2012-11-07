@@ -17,8 +17,8 @@ class PaysController extends Zend_Controller_Action
 		$listeInput['pays_nom'] = new Zend_Form_Element_Text('pays_nom');
 		$listeInput['pays_continent'] = new Zend_Form_Element_Text('pays_continent');
 
-		$listeInput['pays_nom']->setLabel('Nom')->addValidator(new Zend_Validate_Digits());
-		$listeInput['pays_continent']->setLabel('Continent')->addValidator(new Zend_Validate_Digits());
+		$listeInput['pays_nom']->setLabel('Nom')->addValidator(new Zend_Validate_Alpha());
+		$listeInput['pays_continent']->setLabel('Continent')->addValidator(new Zend_Validate_Alpha());
 
 		foreach ($listeInput as $key=>$value) {
 			$value->setRequired(true);
@@ -51,8 +51,8 @@ class PaysController extends Zend_Controller_Action
 		$listeInput['pays_nom'] = new Zend_Form_Element_Text('pays_nom');
 		$listeInput['pays_continent'] = new Zend_Form_Element_Text('pays_continent');
 
-		$listeInput['pays_nom']->setLabel('Nom')->addValidator(new Zend_Validate_Digits());
-		$listeInput['pays_continent']->setLabel('Continent')->addValidator(new Zend_Validate_Digits());
+		$listeInput['pays_nom']->setLabel('Nom')->addValidator(new Zend_Validate_Alpha());
+		$listeInput['pays_continent']->setLabel('Continent')->addValidator(new Zend_Validate_Alpha());
 
 		$dataOld = $tablePays->getPays($id);
 
@@ -66,7 +66,7 @@ class PaysController extends Zend_Controller_Action
 		if($this->getRequest()->isPost()) {
 			$post = $this->getRequest()->getPost();
 			if($form->isValid($post)) {
-				$data = $monForm->getValues();
+				$data = $form->getValues();
 				$tablePays->editPays($id,$data);
 			}
 		}
