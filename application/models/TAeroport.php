@@ -47,30 +47,36 @@ class TAeroport extends Zend_Db_Table_Abstract {
 
 	/**
 	 * Récupère tous les aeroports
+	 * @param array $columns
 	 * @return array
 	 */
-	public function getAllAeroport() {
-		return $this->fetchAll()->toArray();
+	public function getAllAeroports($columns='*') {
+		$requete = $this->select()->from($this, $columns);
+		return $this->fetchAll($requete)->toArray();
 	}
 
 	/**
 	 * Récupère un aeroport selon son id
 	 * @param int $id
+	 * @param array $columns
 	 * @return array
 	 */
-	public function getAeroport($id) {
-		return $this->find($id)->current()->toArray();
+	public function getAeroport($id, $columns='*') {
+		$requete = $this->select()->from($this, $columns)->where('aeroport_trigramme = ?', $id);
+		$data = $this->fetchAll($requete)->toArray();
+		return $data[0];
 	}
 
 	/**
 	 * Récupère $maxInt-$minInt aeroports à partir du $minInt aeroport
 	 * @param int $minInt
 	 * @param int $maxInt
+	 * @param array $columns
 	 * @return array
 	 */
-	public function getSomeAeroport($minInt, $maxInt) {
-		$requete = $this->select()->from($this)
-			->order('id_aeroport')
+	public function getSomeAeroports($minInt, $maxInt, $columns='*') {
+		$requete = $this->select()->from($this, $columns)
+			->order('aeroport_trigramme')
 			->limit($maxInt-$minInt, $minInt);
 		return $this->fetchAll($requete)->toArray();
 	}
@@ -78,9 +84,16 @@ class TAeroport extends Zend_Db_Table_Abstract {
 	/**
 	 * Récupère des aeroports en fonction des paramètres passés
 	 * @param array $data
+	 * @param array $columns
 	 * @return array
 	 *
 	 * @todo à refaire
 	 */
-	public function getAeroportBy($data) {}
+	public function getAeroportsBy($data, $columns='*') {
+		$requete = $this->select()->from($this, $columns);
+		foreach ($data as $arr) {
+			$requete->where($arr['column']. ' ' .$arr['operator'] .' ?', $arr['value']);
+		}
+		return $this->fetchAll($requete)->toArray();
+	}
 }

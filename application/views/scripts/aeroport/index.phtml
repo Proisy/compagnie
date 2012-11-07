@@ -1,0 +1,21 @@
+<h2>Liste des avions</h2>
+<table>
+	<tr>
+		<td>Immatriculation</td>
+		<td>Modèle</td>
+		<td>Heures de vol total de l'avion</td>
+	</tr>
+<?php
+foreach($this->listeAvions as $avion) {
+?>
+	<tr>
+		<td><?php echo $avion['avion_immatriculation']; ?></td>
+		<td><?php echo $avion['modele_marque'].' '.$avion['modele_reference']; ?></td>
+		<td><?php echo $avion['avion_heure_vol_total']; ?></td>
+		<td class="modifier"><a href="/avion/modifier/id/<?php echo $avion['avion_immatriculation'];?>"></a></td>
+		<td class="supprimer"><a href="/avion/supprimer/id/<?php echo $avion['avion_immatriculation'];?>"></a></td>
+	</tr>
+<?php
+}
+?>
+</table>
