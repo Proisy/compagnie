@@ -21,11 +21,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap{
 		return $session;
 	}
 
-	protected function _initDocType()
+	protected function _initViewData()
     {
         $this->bootstrap('View');
         $view = $this->getResource('View');
         $view->doctype('HTML5');
+        $view->setEscape('utf8_encode');
     }
 
 	protected function _initDb() {

@@ -3,16 +3,16 @@ class IndexController extends Zend_Controller_Action
 {
 	protected $_redirector = null;
 	 
-    public function init()
-    {
-        $this->_redirector = $this->_helper->getHelper('Redirector');
-    }
+	public function init()
+	{
+		$this->_redirector = $this->_helper->getHelper('Redirector');
+	}
 		
 	public function webglAction(){
 		
 	}
 		
-    public function indexAction(){
+	public function indexAction(){
 		$this->_helper->layout->setLayout('layout-index');
 		$this->_helper->actionStack('webgl', 'index');
 		$identifiantSaisi = 'GG153P';
@@ -31,7 +31,7 @@ class IndexController extends Zend_Controller_Action
 		if($resultat->isValid()){
 			echo "utilisateur ok";
 		} else echo "erreur d'auth";
-    }
+	}
 		
 	public function loginAction(){
 	}

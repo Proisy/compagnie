@@ -25,9 +25,9 @@ class ModeleController extends Zend_Controller_Action
 		$listeInput['modele_diff_revision'] = new Zend_Form_Element_Text('modele_diff_revision');
 
 		$listeInput['modele_marque']->setLabel('Marque')
-									->addValidator(new Zend_Validate_Digits());
+									->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true)));
 		$listeInput['modele_reference']->setLabel('Référence')
-									->addValidator(new Zend_Validate_Digits());
+									->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true)));
 		$listeInput['modele_rayon']->setLabel('Rayon (en km)')
 									->addValidator(new Zend_Validate_Digits());
 		$listeInput['modele_piste_att']->setLabel('Longueur nécessaire pour l\'atterissage')

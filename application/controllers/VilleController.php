@@ -2,13 +2,11 @@
  
 class VilleController extends Zend_Controller_Action
 {
-	public function init(){
-		// $this->view->setEscape('utf8_encode');
-	}
+	public function init(){}
 
 	public function indexAction(){
 		$tableVille = new TVille;
-		$this->view->listeVille = $tableVille->getAllPays();
+		$this->view->listeVille = $tableVille->getAllVilles();
 	}
 
 	public function ajouterAction() {
@@ -25,7 +23,7 @@ class VilleController extends Zend_Controller_Action
 			$listeInput['id_pays']->addMultiOption($value['id_pays'], $value['pays_nom'].' - '.$value['pays_continent']);
 		}
 
-		$listeInput['ville_nom']->setLabel('Nom')->addValidator(new Zend_Validate_Alpha());
+		$listeInput['ville_nom']->setLabel('Nom')->addValidator(new Zend_Validate_Alpha(array('allowWhiteSpace' => true)));
 		$listeInput['id_pays']->setLabel('Pays')->addValidator(new Zend_Validate_Digits());
 
 		foreach ($listeInput as $key=>$value) {

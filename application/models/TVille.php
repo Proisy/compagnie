@@ -54,8 +54,22 @@ class TVille extends Zend_Db_Table_Abstract {
 	 * Récupère tous les villes
 	 * @return array
 	 */
-	public function getAllVille($columns='*') {
+	public function getAllVilles($columns='*') {
 		$requete = $this->select()->from($this, $columns);
+		return $this->fetchAll($requete)->toArray();
+	}
+
+	/**
+	 * Récupère toutes les villes et leur pays
+	 * @param  array $columns
+	 * @return array
+	 */
+	public function getAllVillesPays($columns='*') {
+		// $tablePays = new TPays;
+		$requete = $this->select()->from(array('v'=>$this->_name), $columns)
+									->setIntegrityCheck(false)
+									->join(array('p'=>'pays'),
+										'v.id_pays=p.id_pays');
 		return $this->fetchAll($requete)->toArray();
 	}
 
@@ -71,12 +85,40 @@ class TVille extends Zend_Db_Table_Abstract {
 	}
 
 	/**
+	 * Récupère une ville et son pays selon son id
+	 * @param  int $id
+	 * @param  array $columns
+	 * @return array
+	 */
+	public function getVillePays($id, $columns='*') {
+		$requete = $this->select()->from(array('v'=>$this->_name), $columns)
+									->setIntegrityCheck(false)
+									->where('v.id_ville = ?', $id)
+									->join(array('p'=>'pays'),
+										'v.id_pays=p.id_pays');
+		$data = $this->fetchAll($requete)->toArray();
+		return $data[0];
+	}
+
+	/**
+	 * Récupère plusieurs villes
+	 * @param  array $listeId
+	 * @param  array $columns
+	 * @return array
+	 */
+	public function getManyVilles($listeId, $columns='*') {
+		$requete = $this->select()->from($this, $columns)->where('id_ville IN (?)', $listeId);
+		$data = $this->fetchAll($requete)->toArray();
+		return $data[0];
+	}
+
+	/**
 	 * Récupère $maxInt-$minInt villes à partir du $minInt ville
 	 * @param int $minInt
 	 * @param int $maxInt
 	 * @return array
 	 */
-	public function getSomeVille($minInt, $maxInt, $columns='*') {
+	public function getSomeVilles($minInt, $maxInt, $columns='*') {
 		$requete = $this->select()->from($this, $columns)
 			->order('id_ville')
 			->limit($maxInt-$minInt, $minInt);
@@ -90,7 +132,7 @@ class TVille extends Zend_Db_Table_Abstract {
 	 *
 	 * @todo à refaire
 	 */
-	public function getVilleBy($data, $columns='*') {
+	public function getVillesBy($data, $columns='*') {
 		$requete = $this->select()->from($this, $columns);
 		foreach ($data as $arr) {
 			$requete->where($arr['column']. ' ' .$arr['operator'] .' ?', $arr['value']);

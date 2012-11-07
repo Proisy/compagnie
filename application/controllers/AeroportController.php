@@ -2,9 +2,7 @@
  
 class AeroportController extends Zend_Controller_Action
 {
-	public function init(){
-		// $this->view->setEscape('utf8_encode');
-	}
+	public function init(){}
 
 	public function indexAction(){
 		$tableAeroport = new TAeroport;
@@ -104,6 +102,70 @@ class AeroportController extends Zend_Controller_Action
 		}
 		else {
 			$this->view->dataAeroport = $tableAeroport->getAeroport($id, array('',''));
+		}
+	}
+
+	public function linkvilleAction() {
+		$id = $this->getRequest()->getParam('id');
+
+		$tableVille = new TVille;
+		$listeVilles = $tableVille->getAllVillesPays(array('id_ville', 'ville_nom'));
+
+		$form = new Zend_Form;
+
+		$listeInput['id_ville'] = new Zend_Form_Element_Select('id_ville');
+
+		foreach ($listeVilles as $key => $value) {
+			$listeInput['id_ville']->addMultiOption($value['id_ville'], $value['ville_nom'].' - '.$value['pays_nom']);
+		}
+
+		$listeInput['id_ville']->setLabel('Ville')->addValidator(new Zend_Validate_Digits());
+
+		foreach ($listeInput as $key=>$value) {
+			$value->setRequired(true);
+			$form->addElement($value);
+		}
+
+		$form->addElement(new Zend_Form_Element_Submit('Valider'));
+
+		if($this->getRequest()->isPost()) {
+			$post = $this->getRequest()->getPost();
+			if($form->isValid($post)) {
+				$tableAeroportVille = new TAeroportVille;
+				$dataLink = array('aeroport_trigramme'=>$id, 'id_ville'=>$post['id_ville']);
+				$tableAeroportVille->addLink($dataLink);
+			}
+		}
+		else {
+			$this->view->form = $form;
+		}
+	}
+
+	public function unlinkvilleAction() {
+		$id_a = $this->getRequest()->getParam('id_a');
+		$id_v = $this->getRequest()->getParam('id_v');
+
+		$tableVille = new TVille;
+		$dataVille = $tableVille->getVillePays($id_v);
+
+		$tableAeroport = new TAeroport;
+		$dataAeroport = $tableAeroport->getAeroport($id_a,array('aeroport_trigramme','aeroport_nom'));
+
+		$form = new Zend_Form;
+
+		$form->addElement(new Zend_Form_Element_Submit('Valider'));
+
+		if($this->getRequest()->isPost()) {
+			$post = $this->getRequest()->getPost();
+
+			if($form->isValid($post)) {
+				$tableAeroportVille = new TAeroportVille;
+				$dataLink = array('aeroport_trigramme'=>$id_a, 'id_ville'=>$id_v);
+				$tableAeroportVille->removeLink($dataLink);
+			}
+		}
+		else {
+			$this->view->form = $form;
 		}
 	}
 }

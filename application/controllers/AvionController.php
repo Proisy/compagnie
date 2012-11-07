@@ -99,7 +99,7 @@ class AvionController extends Zend_Controller_Action
 		if($this->getRequest()->isPost()) {
 			$post = $this->getRequest()->getPost();
 			if($form->isValid($post)) {
-				$data = $monForm->getValues();
+				$data = $form->getValues();
 				$tableAvion->editAvion($id,$data);
 			}
 		}
