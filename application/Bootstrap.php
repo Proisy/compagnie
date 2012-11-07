@@ -26,7 +26,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap{
         $this->bootstrap('View');
         $view = $this->getResource('View');
         $view->doctype('HTML5');
-        $view->setEscape('utf8_encode');
     }
 
 	protected function _initDb() {

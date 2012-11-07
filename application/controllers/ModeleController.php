@@ -10,6 +10,14 @@ class ModeleController extends Zend_Controller_Action
 		$this->view->listeModeles = $tableModele->getAllModeles();
 	}
 
+	public function viewAction() {
+		$id = $this->getRequest()->getParam('id');
+		if(!isset($id)){
+			$redirector = $this->_helper->getHelper('redirector');
+			$redirector->goToUrl('/avion/');
+		}
+	}
+
 	public function ajouterAction() {
 		$this->_helper->actionStack('menu', 'maintenance', 'default', array());
 		$form = new Zend_Form;
@@ -66,7 +74,7 @@ class ModeleController extends Zend_Controller_Action
 
 		$form = new Zend_Form;
 
-		$form->setAction('/modele/modifier/')->setMethod('post');
+		$form->setAction('/modele/modifier/id/'.$id)->setMethod('post');
 
 		$listeInput['modele_marque'] = new Zend_Form_Element_Text('modele_marque');
 		$listeInput['modele_reference'] = new Zend_Form_Element_Text('modele_reference');

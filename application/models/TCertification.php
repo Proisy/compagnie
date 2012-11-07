@@ -48,20 +48,8 @@ class TCertification extends Zend_Db_Table_Abstract {
 	 * Récupère toutes les certifications
 	 * @return array
 	 */
-	public function getAllCertifications() {
-		return $this->fetchAll()->toArray();
-	}
-
-	/**
-	 * Récupère $maxInt-$minInt certifications à partir du $minInt certification
-	 * @param int $minInt
-	 * @param int $maxInt
-	 * @return array
-	 */
-	public function getSomeCertifications($minInt, $maxInt) {
-		$requete = $this->select()->from($this)
-			->order('id_certification')
-			->limit($maxInt-$minInt, $minInt);
+	public function getAllCertifications($columns='*') {
+		$requete = $this->select()->from($this, $columns);
 		return $this->fetchAll($requete)->toArray();
 	}
 
@@ -70,9 +58,25 @@ class TCertification extends Zend_Db_Table_Abstract {
 	 * @param int $id
 	 * @return array
 	 */
-	public function getCertification($id) {
-		return $this->find($id)->current()->toArray();
+	public function getCertification($id,$columns='*') {
+		$requete = $this->select()->from($this, $columns)->where('id_certification = ?', $id);
+		$data = $this->fetchAll($requete)->toArray();
+		return $data[0];
 	}
+
+	/**
+	 * Récupère $maxInt-$minInt certifications à partir du $minInt certification
+	 * @param int $minInt
+	 * @param int $maxInt
+	 * @return array
+	 */
+	public function getSomeCertifications($minInt, $maxInt, $columns='*') {
+		$requete = $this->select()->from($this, $columns)
+			->order('id_certification')
+			->limit($maxInt-$minInt, $minInt);
+		return $this->fetchAll($requete)->toArray();
+	}
+
 
 	/**
 	 * Récupère des certifications en fonction des paramètres passés
@@ -81,5 +85,11 @@ class TCertification extends Zend_Db_Table_Abstract {
 	 *
 	 * @todo à refaire
 	 */
-	public function getCertificationsBy($data) {}
+	public function getCertificationsBy($data, $columns='*') {
+		$requete = $this->select()->from($this, $columns);
+		foreach ($data as $arr) {
+			$requete->where($arr['column']. ' ' .$arr['operator'] .' ?', $arr['value']);
+		}
+		return $this->fetchAll($requete)->toArray();
+	}
 }

@@ -14,6 +14,14 @@ class AvionController extends Zend_Controller_Action
 		}
 	}
 
+	public function viewAction() {
+		$id = $this->getRequest()->getParam('id');
+		if(!isset($id)){
+			$redirector = $this->_helper->getHelper('redirector');
+			$redirector->goToUrl('/avion/');
+		}
+	}
+
 	public function ajouterAction() {
 		$tableModele = new TModele;
 		$listeModeles = $tableModele->getAllModeles(array('id_modele','modele_marque','modele_reference'));
@@ -68,7 +76,7 @@ class AvionController extends Zend_Controller_Action
 		
 		$form = new Zend_Form;
 
-		$form->setAction('/avion/modifier/')->setMethod('post');
+		$form->setAction('/avion/modifier/id/'.$id)->setMethod('post');
 
 		$listeInput['avion_immatriculation'] = new Zend_Form_Element_Text('avion_immatriculation');
 		$listeInput['id_modele'] = new Zend_Form_Element_Select('id_modele');

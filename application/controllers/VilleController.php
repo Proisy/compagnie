@@ -9,6 +9,14 @@ class VilleController extends Zend_Controller_Action
 		$this->view->listeVille = $tableVille->getAllVilles();
 	}
 
+	public function viewAction() {
+		$id = $this->getRequest()->getParam('id');
+		if(!isset($id)){
+			$redirector = $this->_helper->getHelper('redirector');
+			$redirector->goToUrl('/ville/');
+		}
+	}
+
 	public function ajouterAction() {
 		$tablePays = new TPays();
 		$listePays = $tablePays->getAllPays();
@@ -54,7 +62,7 @@ class VilleController extends Zend_Controller_Action
 
 		$form = new Zend_Form;
 
-		$form->setAction('/ville/modifier/')->setMethod('post');
+		$form->setAction('/ville/modifier/id/'.$id)->setMethod('post');
 
 		$listeInput['ville_nom'] = new Zend_Form_Element_Text('ville_nom');
 		$listeInput['id_pays'] = new Zend_Form_Element_Select('id_pays');

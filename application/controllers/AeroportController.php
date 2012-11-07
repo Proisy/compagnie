@@ -9,6 +9,14 @@ class AeroportController extends Zend_Controller_Action
 		$this->view->listeAeroport = $tableAeroport->getAllAeroports();
 	}
 
+	public function viewAction() {
+		$id = $this->getRequest()->getParam('id');
+		if(!isset($id)){
+			$redirector = $this->_helper->getHelper('redirector');
+			$redirector->goToUrl('/aeroport/');
+		}
+	}
+
 	public function ajouterAction() {
 		$form = new Zend_Form;
 
@@ -54,7 +62,7 @@ class AeroportController extends Zend_Controller_Action
 
 		$form = new Zend_Form;
 
-		$form->setAction('/aeroport/modifier/')->setMethod('post');
+		$form->setAction('/aeroport/modifier/id/'.$id)->setMethod('post');
 
 		$listeInput['aeroport_trigramme'] = new Zend_Form_Element_Text('aeroport_trigramme');
 		$listeInput['aeroport_nom'] = new Zend_Form_Element_Text('aeroport_nom');
@@ -101,7 +109,7 @@ class AeroportController extends Zend_Controller_Action
 			$tableAeroport->deleteAeroport($id);
 		}
 		else {
-			$this->view->dataAeroport = $tableAeroport->getAeroport($id, array('',''));
+			$this->view->dataAeroport = $tableAeroport->getAeroport($id);
 		}
 	}
 

@@ -9,6 +9,14 @@ class PaysController extends Zend_Controller_Action
 		$this->view->listePays = $tablePays->getAllPays();
 	}
 
+	public function viewAction() {
+		$id = $this->getRequest()->getParam('id');
+		if(!isset($id)){
+			$redirector = $this->_helper->getHelper('redirector');
+			$redirector->goToUrl('/pays/');
+		}
+	}
+
 	public function ajouterAction() {
 		$form = new Zend_Form;
 
@@ -46,7 +54,7 @@ class PaysController extends Zend_Controller_Action
 
 		$form = new Zend_Form;
 
-		$form->setAction('/pays/modifier/')->setMethod('post');
+		$form->setAction('/pays/modifier/id/'.$id)->setMethod('post');
 
 		$listeInput['pays_nom'] = new Zend_Form_Element_Text('pays_nom');
 		$listeInput['pays_continent'] = new Zend_Form_Element_Text('pays_continent');
