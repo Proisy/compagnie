@@ -1,1 +1,21 @@
+<h2>Liste des modèles d'avion</h2>
+<table>
+	<tr>
+		<td>Marque du modèle</td>
+		<td>Référence</td>
+		<td>Distance de vol maximale</td>
+	</tr>
 <?php
+foreach($this->listeModeles as $modele) {
+?>
+	<tr>
+		<td><?php echo $modele['modele_marque']; ?></td>
+		<td><?php echo $modele['modele_reference']; ?></td>
+		<td><?php echo $modele['modele_rayon']; ?></td>
+		<td class="modifier"><a href="/modele/modifier/id/<?php echo $modele['id_modele'];?>"></a></td>
+		<td class="supprimer"><a href="/modele/supprimer/id/<?php echo $modele['id_modele'];?>"></a></td>
+	</tr>
+<?php
+}
+?>
+</table>

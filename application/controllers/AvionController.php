@@ -7,6 +7,11 @@ class AvionController extends Zend_Controller_Action
 	public function indexAction(){
 		$tableAvion = new TAvion;
 		$this->view->listeAvions = $tableAvion->getAllAvions();
+		$tableModele = new TModele;
+		foreach ($this->view->listeAvions as $key=>$value) {
+			$dataModele = $tableModele->getModele($value['id_modele'], array('modele_marque','modele_reference'));
+			$this->view->listeAvions[$key] = array_merge($value, $dataModele);
+		}
 	}
 
 	public function ajouterAction() {

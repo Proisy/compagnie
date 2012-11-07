@@ -34,5 +34,17 @@ table { border-collapse: collapse; border-spacing: 0; }
 	footer{ background-color:#ebeef6; clear:left; border-radius:10px; border:2px solid; width:935px; margin-left:20px; }
 	
 
+/* Classes dédiées aux listes d'entités */
+.modifier, .supprimer {
+	height: 8px;
+	width: 8px;
+}
 
-		
+.modifier a {
+	background-image: url('');
+}
+
+.supprimer a {
+	background-image: url('');
+}
+
