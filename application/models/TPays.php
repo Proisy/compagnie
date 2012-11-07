@@ -46,10 +46,12 @@ class TPays extends Zend_Db_Table_Abstract {
 
 	/**
 	 * Récupère tous les pays
+	 * @param array $columns
 	 * @return array
 	 */
-	public function getAllPays() {
-		return $this->fetchAll()->toArray();
+	public function getAllPays($columns='*') {
+		$requete = $this->select()->from($this, $columns);
+		return $this->fetchAll($requete)->toArray();
 	}
 
 	/**
@@ -57,18 +59,21 @@ class TPays extends Zend_Db_Table_Abstract {
 	 * @param int $id
 	 * @return array
 	 */
-	public function getPays($id) {
-		return $this->find($id)->current()->toArray();
+	public function getPays($id, $columns='*') {
+		$requete = $this->select()->from($this, $columns)->where('id_pays = ?', $id);
+		$data = $this->fetchAll($requete)->toArray();
+		return $data[0];
 	}
 
 	/**
 	 * Récupère $maxInt-$minInt pays à partir du $minInt pays
 	 * @param int $minInt
 	 * @param int $maxInt
+	 * @param array $columns
 	 * @return array
 	 */
-	public function getSomePays($minInt, $maxInt) {
-		$requete = $this->select()->from($this)
+	public function getSomePays($minInt, $maxInt, $columns='*') {
+		$requete = $this->select()->from($this, $columns)
 			->order('id_pays')
 			->limit($maxInt-$minInt, $minInt);
 		return $this->fetchAll($requete)->toArray();
@@ -77,9 +82,18 @@ class TPays extends Zend_Db_Table_Abstract {
 	/**
 	 * Récupère des pays en fonction des paramètres passés
 	 * @param array $data
+	 *        $data[] = array(
+	 *        		'column' => ?,
+	 *          	'operator' => ?,
+	 *          	'value' => ? )
+	 * @param array $columns
 	 * @return array
-	 *
-	 * @todo à refaire
 	 */
-	public function getPaysBy($data) {}
+	public function getPaysBy($data, $columns='*') {
+		$requete = $this->select()->from($this, $columns);
+		foreach ($data as $arr) {
+			$requete->where($arr['column']. ' ' .$arr['operator'] .' ?', $arr['value']);
+		}
+		return $this->fetchAll($requete)->toArray();
+	}
 }

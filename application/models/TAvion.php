@@ -81,7 +81,7 @@ class TAvion extends Zend_Db_Table_Abstract {
 	 */
 	public function getSomeAvions($minInt=0, $maxInt=20, $columns='*') {
 		$requete = $this->select()->from($this, $columns)
-			->order('id_avion')
+			->order('avion_immatriculation')
 			->limit($maxInt-$minInt, $minInt);
 		return $this->fetchAll($requete)->toArray();
 	}
