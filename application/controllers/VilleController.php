@@ -15,6 +15,10 @@ class VilleController extends Zend_Controller_Action
 			$redirector = $this->_helper->getHelper('redirector');
 			$redirector->goToUrl('/ville/');
 		}
+		else {
+			$tableAeroportVille = new TAeroportVille;
+			var_dump($tableAeroportVille->getLinkedAeroports($id));
+		}
 	}
 
 	public function ajouterAction() {

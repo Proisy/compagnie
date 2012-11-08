@@ -15,6 +15,9 @@ class AeroportController extends Zend_Controller_Action
 			$redirector = $this->_helper->getHelper('redirector');
 			$redirector->goToUrl('/aeroport/');
 		}
+		else {
+			
+		}
 	}
 
 	public function ajouterAction() {

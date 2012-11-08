@@ -16,6 +16,9 @@ class ModeleController extends Zend_Controller_Action
 			$redirector = $this->_helper->getHelper('redirector');
 			$redirector->goToUrl('/avion/');
 		}
+		else {
+			
+		}
 	}
 
 	public function ajouterAction() {
