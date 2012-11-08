@@ -64,7 +64,7 @@ class TAeroportVille extends Zend_Db_Table_Abstract {
 	public function getLinkedVilles($aeroport_trigramme){
 		$requete = $this->select()
 					->setIntegrityCheck(false)
-					->from(array('l'=>$this->_name))
+					->from(array('l'=>$this->_name), array('id_ville'))
 					->join(array('v'=>'ville'), 'v.id_ville=l.id_ville')
 					->join(array('p'=>'pays'),'v.id_pays=p.id_pays')
 					->where('aeroport_trigramme = ?', $aeroport_trigramme);
@@ -84,7 +84,7 @@ class TAeroportVille extends Zend_Db_Table_Abstract {
 		}
 		$requete = $this->select()
 					->setIntegrityCheck(false)
-					->from(array('v'=>'ville'), array('v.ville_nom'))
+					->from(array('v'=>'ville'), array('v.id_ville','v.ville_nom'))
 					->from(array('p'=>'pays'), array('p.pays_nom'))
 					->where('v.id_ville NOT IN (?)', $listeVilles)
 					->where('v.id_pays=p.id_pays');

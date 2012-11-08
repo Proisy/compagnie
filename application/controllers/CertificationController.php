@@ -16,7 +16,7 @@ class CertificationController extends Zend_Controller_Action
 			$redirector->goToUrl('/certification/');
 		}
 		else {
-			
+
 		}
 	}
 
@@ -107,8 +107,8 @@ class CertificationController extends Zend_Controller_Action
 	public function linkmodeleAction() {
 		$id = $this->getRequest()->getParam('id');
 
-		$tableModele = new TModele;
-		$listeModeles = $tableModele->getAllModeles(array('id_modele', 'modele_marque', 'modele_reference'));
+		$tableCertificationModele = new TCertificationModele;
+		$listeModeles = $tableCertificationModele->getUnlinkedModeles($id);
 
 		$form = new Zend_Form;
 
@@ -141,6 +141,29 @@ class CertificationController extends Zend_Controller_Action
 	}
 
 	public function unlinkmodeleAction() {
-		
+		$id_c = $this->getRequest()->getParam('id_c');
+		$id_m = $this->getRequest()->getParam('id_m');
+
+		$tableModele = new tableModele;
+		$dataModele = $tableModele->getModele($id_m);
+
+		$tableCertification = new TCertification;
+		$dataCertification = $tableCertification->getCertification($id_c,array('id_certification','certification_nom'));
+
+		$form = new Zend_Form;
+
+		$form->addElement(new Zend_Form_Element_Submit('Valider'));
+
+		if($this->getRequest()->isPost()) {
+			$post = $this->getRequest()->getPost();
+
+			if($form->isValid($post)) {
+				$tableCertificationModele = new TCertificationModele;
+				$tableAeroportVille->removeLink(array('id_certification'=>$id_c, 'id_modele'=>$id_m));
+			}
+		}
+		else {
+			$this->view->form = $form;
+		}
 	}
 }

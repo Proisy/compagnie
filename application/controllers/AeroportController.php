@@ -16,7 +16,7 @@ class AeroportController extends Zend_Controller_Action
 			$redirector->goToUrl('/aeroport/');
 		}
 		else {
-			
+
 		}
 	}
 
@@ -119,8 +119,8 @@ class AeroportController extends Zend_Controller_Action
 	public function linkvilleAction() {
 		$id = $this->getRequest()->getParam('id');
 
-		$tableVille = new TVille;
-		$listeVilles = $tableVille->getAllVillesPays(array('id_ville', 'ville_nom'));
+		$tableAeroportVille = new TAeroportVille;
+		$listeVilles = $tableAeroportVille->getUnlinkedVilles($id);
 
 		$form = new Zend_Form;
 
@@ -171,8 +171,7 @@ class AeroportController extends Zend_Controller_Action
 
 			if($form->isValid($post)) {
 				$tableAeroportVille = new TAeroportVille;
-				$dataLink = array('aeroport_trigramme'=>$id_a, 'id_ville'=>$id_v);
-				$tableAeroportVille->removeLink($dataLink);
+				$tableAeroportVille->removeLink(array('aeroport_trigramme'=>$id_a, 'id_ville'=>$id_v));
 			}
 		}
 		else {
