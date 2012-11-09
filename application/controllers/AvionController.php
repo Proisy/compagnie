@@ -5,6 +5,7 @@ class AvionController extends Zend_Controller_Action
 	public function init(){}
 
 	public function indexAction(){
+		$this->_helper->actionStack('menu', 'maintenance', 'default', array());
 		$tableAvion = new TAvion;
 		$this->view->listeAvions = $tableAvion->getAllAvions();
 		$tableModele = new TModele;
@@ -23,6 +24,7 @@ class AvionController extends Zend_Controller_Action
 	}
 
 	public function ajouterAction() {
+		$this->_helper->actionStack('menu', 'maintenance', 'default', array());
 		$tableModele = new TModele;
 		$listeModeles = $tableModele->getAllModeles(array('id_modele','modele_marque','modele_reference'));
 		
@@ -68,6 +70,7 @@ class AvionController extends Zend_Controller_Action
 	}
 	
 	public function modifierAction() {
+		$this->_helper->actionStack('menu', 'maintenance', 'default', array());
 		$id = $this->getRequest()->getParam('id');
 		$tableAvion = new TAvion;
 
@@ -117,6 +120,7 @@ class AvionController extends Zend_Controller_Action
 	}
 	
 	public function supprimerAction() {
+		$this->_helper->actionStack('menu', 'maintenance', 'default', array());
 		$id = $this->getRequest()->getParam('id');
 		$tableAvion = new TAvion;
 

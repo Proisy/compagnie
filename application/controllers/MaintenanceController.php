@@ -1,6 +1,6 @@
 <?php
 
-class maintenanceController extends Zend_Controller_Action
+class MaintenanceController extends Zend_Controller_Action
 {
 	public function init(){}
 
