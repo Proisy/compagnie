@@ -1,16 +1,8 @@
 		<ul class="niveau1">						
 			<li class="titre">Maintenance</li><hr />
 			<ul class="niveau2">	
-				<li>Planification</li>
-				<li>Avions</li>
-					<ul class="niveau3">
-						<li>Ajouter</li>
-						<li>Modifier</li>
-						<li>Supprimer</li></ul>
-				<li>Mod&eacute;les</li>
-					<ul class="niveau3">
-						<li>Ajouter</li>
-						<li>Modifier</li>
-						<li>Supprimer</li></ul>
+				<li><a href="<?php echo $this->baseUrl('planification/maintenance');?>">Planification</a></li>
+				<li><a href="<?php echo $this->baseUrl('avion/index');?>">Avions</a></li>
+				<li><a href="<?php echo $this->baseUrl('modele/index');?>">Mod&eacute;les</a></li>
 			</ul>
 		</ul>

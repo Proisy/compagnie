@@ -32,19 +32,6 @@ table { border-collapse: collapse; border-spacing: 0; }
 	section{ background-color:#ebeef6; float:left; width:710px; height:700px; border-radius:10px; border:2px solid; margin-bottom:20px;}
 	#apps{ background-color:#f1f2f8; margin:20px; height:660px; }
 	footer{ background-color:#ebeef6; clear:left; border-radius:10px; border:2px solid; width:935px; margin-left:20px; }
-	
-
-/* Classes dédiées aux listes d'entités */
-.modifier, .supprimer {
-	height: 8px;
-	width: 8px;
-}
-
-.modifier a {
-	background-image: url('');
-}
-
-.supprimer a {
-	background-image: url('');
-}
+	/* Classes dédiées aux listes d'entités */
+	.modifier, .supprimer { height: 20px; width: 20px; }
 

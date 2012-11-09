@@ -1,4 +1,5 @@
 <h2>Liste des modèles d'avion</h2>
+<br />
 <table>
 	<tr>
 		<td>Marque du modèle</td>
@@ -12,8 +13,8 @@ foreach($this->listeModeles as $modele) {
 		<td><?php echo $modele['modele_marque']; ?></td>
 		<td><?php echo $modele['modele_reference']; ?></td>
 		<td><?php echo $modele['modele_rayon']; ?></td>
-		<td class="modifier"><a href="/modele/modifier/id/<?php echo $modele['id_modele'];?>"></a></td>
-		<td class="supprimer"><a href="/modele/supprimer/id/<?php echo $modele['id_modele'];?>"></a></td>
+		<td><a href="/modele/modifier/id/<?php echo $modele['id_modele'];?>"><img src="../img/modifier.png" class="modifier" /></a></td>
+		<td><a href="/modele/supprimer/id/<?php echo $modele['id_modele'];?>"><img src="../img/supprimer.png" class="supprimer" /></a></td>
 	</tr>
 <?php
 }
