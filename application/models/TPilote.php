@@ -53,20 +53,8 @@ class TPilote extends Zend_Db_Table_Abstract {
 	 * Récupère tous les pilotes
 	 * @return array
 	 */
-	public function getAllPilotes() {
-		return $this->fetchAll()->toArray();
-	}
-
-	/**
-	 * Récupère $maxInt-$minInt pilotes à partir du $minInt pilote
-	 * @param int $minInt
-	 * @param int $maxInt
-	 * @return array
-	 */
-	public function getSomePilotes($minInt, $maxInt) {
-		$requete = $this->select()->from($this)
-			->order('id_pilote')
-			->limit($maxInt-$minInt, $minInt);
+	public function getAllPilotes($columns='*') {
+		$requete = $this->select()->from($this, $columns);
 		return $this->fetchAll($requete)->toArray();
 	}
 
@@ -75,8 +63,23 @@ class TPilote extends Zend_Db_Table_Abstract {
 	 * @param int $id
 	 * @return array
 	 */
-	public function getPilote($id) {
-		return $this->find($id)->current()->toArray();
+	public function getPilote($id,$columns='*') {
+		$requete = $this->select()->from($this, $columns)->where('id_modele = ?', $id);
+		$data = $this->fetchAll($requete)->toArray();
+		return $data[0];
+	}
+
+	/**
+	 * Récupère $maxInt-$minInt pilotes à partir du $minInt pilote
+	 * @param int $minInt
+	 * @param int $maxInt
+	 * @return array
+	 */
+	public function getSomePilotes($minInt, $maxInt,$columns='*') {
+		$requete = $this->select()->from($this, $columns)
+			->order('id_modele')
+			->limit($maxInt-$minInt, $minInt);
+		return $this->fetchAll($requete)->toArray();
 	}
 
 	/**
@@ -86,5 +89,11 @@ class TPilote extends Zend_Db_Table_Abstract {
 	 *
 	 * @todo à refaire
 	 */
-	public function getPilotesBy($data) {}
+	public function getPilotesBy($data,$columns='*') {
+		$requete = $this->select()->from($this, $columns);
+		foreach ($data as $arr) {
+			$requete->where($arr['column']. ' ' .$arr['operator'] .' ?', $arr['value']);
+		}
+		return $this->fetchAll($requete)->toArray();
+	}
 }

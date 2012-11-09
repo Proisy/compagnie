@@ -50,20 +50,8 @@ class TUser extends Zend_Db_Table_Abstract {
 	 * Récupère tous les utilisateurs
 	 * @return array
 	 */
-	public function getAllUsers() {
-		return $this->fetchAll()->toArray();
-	}
-
-	/**
-	 * Récupère $maxInt-$minInt utilisateurs à partir du $minInt utilisateur
-	 * @param int $minInt
-	 * @param int $maxInt
-	 * @return array
-	 */
-	public function getSomeUsers($minInt, $maxInt) {
-		$requete = $this->select()->from($this)
-			->order('id_avion')
-			->limit($maxInt-$minInt, $minInt);
+	public function getAllUsers($columns='*') {
+		$requete = $this->select()->from($this, $columns);
 		return $this->fetchAll($requete)->toArray();
 	}
 
@@ -72,8 +60,23 @@ class TUser extends Zend_Db_Table_Abstract {
 	 * @param int $id
 	 * @return array
 	 */
-	public function getUsers($id) {
-		return $this->find($id)->current()->toArray();
+	public function getUser($id,$columns='*') {
+		$requete = $this->select()->from($this, $columns)->where('id_user = ?', $id);
+		$data = $this->fetchAll($requete)->toArray();
+		return $data[0];
+	}
+
+	/**
+	 * Récupère $maxInt-$minInt utilisateurs à partir du $minInt utilisateur
+	 * @param int $minInt
+	 * @param int $maxInt
+	 * @return array
+	 */
+	public function getSomeUsers($minInt, $maxInt,$columns='*') {
+		$requete = $this->select()->from($this, $columns)
+			->order('id_user')
+			->limit($maxInt-$minInt, $minInt);
+		return $this->fetchAll($requete)->toArray();
 	}
 
 	/**
@@ -83,5 +86,11 @@ class TUser extends Zend_Db_Table_Abstract {
 	 *
 	 * @todo à refaire
 	 */
-	public function getUsersBy($data) {}
+	public function getUsersBy($data,$columns='*') {
+		$requete = $this->select()->from($this, $columns);
+		foreach ($data as $arr) {
+			$requete->where($arr['column']. ' ' .$arr['operator'] .' ?', $arr['value']);
+		}
+		return $this->fetchAll($requete)->toArray();
+	}
 }
