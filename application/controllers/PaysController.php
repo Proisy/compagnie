@@ -1,8 +1,10 @@
 <?php
  
-class PaysController extends Zend_Controller_Action
+class PaysController extends Extension_Controller_Action
 {
-	public function init(){}
+	public function init(){
+		parent::init();
+	}
 
 	public function indexAction(){
 		$tablePays = new TPays;

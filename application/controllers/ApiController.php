@@ -1,8 +1,9 @@
 <?php
 
-class ApiController extends Zend_Controller_Action
+class ApiController extends Extension_Controller_Action
 {
 	public function init(){
+		parent::init();
 		$this->_helper->layout->disableLayout();
 		header('Content-type: application/json');
 		$this->fonction = $this->getRequest()->getParam('fonction');
@@ -19,8 +20,11 @@ class ApiController extends Zend_Controller_Action
 		switch ($this->fonction) {
 			case 'get':
 				$id = $this->getRequest()->getParam('id');
+				$columnsStr = $this->getRequest()->getParam('columns');
+				if(isset($columnsStr)){ $columns = explode(' ',$columnsStr); }
+				else { $columns = '*'; }
 				$tableAvion = new TAvion;
-				echo json_encode($tableAvion->getAvion($id));
+				echo json_encode($tableAvion->getAvion($id,$columns));
 				break;
 			case 'getAll':
 				$tableAvion = new TAvion;

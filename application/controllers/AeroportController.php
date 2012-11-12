@@ -1,8 +1,10 @@
 <?php
  
-class AeroportController extends Zend_Controller_Action
+class AeroportController extends Extension_Controller_Action
 {
-	public function init(){}
+	public function init(){
+		parent::init();
+	}
 
 	public function indexAction(){
 		$tableAeroport = new TAeroport;

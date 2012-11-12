@@ -1,11 +1,11 @@
 <?php 
-class IndexController extends Zend_Controller_Action
+class IndexController extends Extension_Controller_Action
 {
 	protected $_redirector = null;
 	 
 	public function init()
 	{
-		$this->_redirector = $this->_helper->getHelper('Redirector');
+		parent::init();
 	}
 		
 	public function webglAction(){

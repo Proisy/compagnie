@@ -1,8 +1,10 @@
 <?php 
-class DrhController extends Zend_Controller_Action
+class DrhController extends Extension_Controller_Action
 {
  
-	public function init(){}
+	public function init(){
+		parent::init();
+	}
 	
 	public function indexAction(){
 		$this->_helper->actionStack('menu', 'drh', 'default', array());

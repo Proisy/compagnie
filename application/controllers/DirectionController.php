@@ -1,8 +1,10 @@
 <?php
 
-class DirectionController extends Zend_Controller_Action
+class DirectionController extends Extension_Controller_Action
 {
-	public function init(){}
+	public function init(){
+		parent::init();
+	}
 
 	public function indexAction(){
 		$this->_helper->actionStack('menu', 'direction', 'default', array());

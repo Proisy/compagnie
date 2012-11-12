@@ -1,8 +1,10 @@
 <?php
  
-class VilleController extends Zend_Controller_Action
+class VilleController extends Extension_Controller_Action
 {
-	public function init(){}
+	public function init(){
+		parent::init();
+	}
 
 	public function indexAction(){
 		$tableVille = new TVille;
