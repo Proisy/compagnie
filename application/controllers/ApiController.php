@@ -26,6 +26,7 @@ class ApiController extends Extension_Controller_Action
 				$tableAvion = new TAvion;
 				echo json_encode($tableAvion->getAvion($id,$columns));
 				break;
+
 			case 'getAll':
 				$tableAvion = new TAvion;
 				$columnsStr = $this->getRequest()->getParam('columns');

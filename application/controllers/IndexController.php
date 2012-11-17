@@ -1,8 +1,6 @@
 <?php 
 class IndexController extends Extension_Controller_Action
 {
-	protected $_redirector = null;
-	 
 	public function init()
 	{
 		parent::init();
@@ -14,25 +12,53 @@ class IndexController extends Extension_Controller_Action
 		
 	public function indexAction(){
 		$this->_helper->layout->setLayout('layout-index');
-		$this->_helper->actionStack('webgl', 'index');
-		$identifiantSaisi = 'JD865P';
-		$passwordSaisi = '5c5dd62d44fd9ba931876b73e9f232f2';
-		//connection à la base de données
-		$db = Zend_Registry::get('db');
-		// Instancation de Zend_Auth
-		$auth = Zend_Auth::getInstance();
-		//charger et parametrer l'adaptateur
-		$dbAdapter = new Zend_Auth_Adapter_DbTable($db, 'user', 'user_identifiant', 'user_password', 'MD5(?)');
-		//cahrger l'identifiant et le mdp a tester
-		$dbAdapter->setIdentity($identifiantSaisi);
-		$dbAdapter->setCredential($passwordSaisi);
-		//On test l'authentification
-		$resultat = $auth->authenticate($dbAdapter);
-		if($resultat->isValid()){
-			echo "utilisateur ok";
-		} else echo "erreur d'auth";
+
+		$form = new Zend_Form;
+
+		$loginInput = new Zend_Form_Element_Text('login');
+		$loginInput->setLabel('Identifiant')
+				->setAttrib('required','required');
+		$passwordInput = new Zend_Form_Element_Password('password');
+		$passwordInput->setLabel('Mot de passe')
+				->setAttrib('required','required');
+
+		$submit = new Zend_Form_Element_Submit('Connect');
+
+		$form->addElement($loginInput);
+		$form->addElement($passwordInput);
+		$form->addElement($submit);
+
+		if($this->getRequest()->isPost()) {
+			$post = $this->getRequest()->getPost();
+			if($form->isValid($post)) {
+				$data = $form->getValues();
+				$dbAuthAdapter = new Zend_Auth_Adapter_DbTable(Zend_Registry::get('db'), 'user','user_login','user_password','MD5(?)');
+				$dbAuthAdapter->setIdentity($data['login']);
+				$dbAuthAdapter->setCredential($data['password']);
+				$res = $this->_auth->authenticate($dbAuthAdapter);
+				if($res->isValid()) {
+					$this->_auth->getStorage()->write($dbAuthAdapter->getResultRowObject(array('id_user','id_package'),null));
+					$this->_flashMessenger->addMessage('Vous vous êtes connecté avec succès');
+					$this->_redirector->goToUrl('/avion/');
+				}
+				else {
+					$this->_flashMessenger->addMessage('Mauvais identifiant et/ou mot de passe');
+					$this->view->form = $form;
+				}
+			}
+			else {
+				$this->_flashMessenger->addMessage('Wrong login and/or password');
+				$this->view->form = $form;
+			}
+		}
+		else {
+			$this->view->form = $form;
+		}
 	}
 		
-	public function loginAction(){
+	public function logoutAction() {
+		$this->_auth->clearIdentity();
+		$this->_flashMessenger->addMessage('Vous êtes déconnecté');
+		$this->_redirector->goToUrl('/');
 	}
 }
