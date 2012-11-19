@@ -4,6 +4,7 @@ class AeroportController extends Extension_Controller_Action
 {
 	public function init(){
 		parent::init();
+		$this->_helper->actionStack('menu', 'direction', 'default', array());
 	}
 
 	public function indexAction(){
@@ -18,7 +19,8 @@ class AeroportController extends Extension_Controller_Action
 			$redirector->goToUrl('/aeroport/');
 		}
 		else {
-
+			$tableAeroport = new TAeroport;
+			$this->view->aeroport = $tableAeroport->getAeroport($id);
 		}
 	}
 
