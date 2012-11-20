@@ -74,11 +74,15 @@ class TAeroport extends Zend_Db_Table_Abstract {
 	 * @param array $columns
 	 * @return array
 	 */
-	public function getSomeAeroports($minInt, $maxInt, $columns='*') {
-		$requete = $this->select()->from($this, $columns)
-			->order('aeroport_trigramme')
-			->limit($maxInt-$minInt, $minInt);
+	public function getSomeAeroports($page, $nbAeroport, $columns='*') {
+		$requete = $this->select()->from($this, $columns)->limitPage($page,$nbAeroport);
 		return $this->fetchAll($requete)->toArray();
+	}
+
+	public function countAeroport(){
+			$requete = $this->select()->from($this, array('count(*) as nbAeroport'));
+			$data = $this->fetchAll($requete);
+			return $data[0]->nbAeroport; 
 	}
 
 	/**

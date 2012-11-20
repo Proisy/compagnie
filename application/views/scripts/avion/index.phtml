@@ -12,8 +12,8 @@ foreach($this->listeAvions as $avion) {
 		<td><?php echo $avion['avion_immatriculation']; ?></td>
 		<td><?php echo $avion['modele_marque'].' '.$avion['modele_reference']; ?></td>
 		<td><?php echo $avion['avion_heure_vol_total']; ?></td>
-		<td><a href="/avion/modifier/id/<?php echo $avion['avion_immatriculation'];?>"><img src="../img/modifier.png" class="modifier" /></a></a></td>
-		<td><a href="/avion/supprimer/id/<?php echo $avion['avion_immatriculation'];?>"><img src="../img/supprimer.png" class="supprimer" /></a></a></td>
+		<td><a href="/avion/modifier/id/<?php echo $avion['avion_immatriculation'];?>"><img src="../img/modifier.png" class="modifier" /></a></td>
+		<td><a href="/avion/supprimer/id/<?php echo $avion['avion_immatriculation'];?>"><img src="../img/supprimer.png" class="supprimer" /></a></td>
 	</tr>
 <?php
 }

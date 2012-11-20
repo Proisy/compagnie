@@ -23,6 +23,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 /*********Fin RESET CSS**********/
 	body{ background:url('../img/nuages.png'); background-color:#6e7bb4; }
 	#page{ width:960px; height:1020px; margin:auto; }
+	a{text-decoration: none;}
 	header{ background:url('../img/logo.png'); background-repeat:no-repeat; background-position:center; background-color:#c3c7e1; text-indent:-9999px;
 		height:200px; width:940px; margin-top:15px; margin-left:20px; margin-bottom:50px; border-radius:10px; border: 2px solid; }
 	nav{ background-color:#c3c7e1; float:left; width:200px; height:250px; margin-left:20px; margin-right:20px; border-radius:10px; border:2px solid; }

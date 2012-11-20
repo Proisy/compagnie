@@ -1,21 +1,24 @@
-<? /*<h2>Liste des avions</h2>
+<h2>Liste des aeroports</h2>
+	<br /><a href="/aeroport/ajouter"><input type="button" value="Ajouter" /></a><br /><br />
 <table>
 	<tr>
-		<td>Immatriculation</td>
-		<td>Modèle</td>
-		<td>Heures de vol total de l'avion</td>
+		<td>Trigramme</td>
+		<td>Nom</td>
+		<td>Terminaux</td>
+		<td>Longueur de piste</td>
 	</tr>
 <?php
-	foreach($this->listeAeroport as $avion) {
+	foreach($this->listeAeroport as $aeroport) {
 ?>
 	<tr>
-		<td><?php echo $avion['avion_immatriculation']; ?></td>
-		<td><?php echo $avion['modele_marque'].' '.$avion['modele_reference']; ?></td>
-		<td><?php echo $avion['avion_heure_vol_total']; ?></td>
-		<td class="modifier"><a href="/avion/modifier/id/<?php echo $avion['avion_immatriculation'];?>"></a></td>
-		<td class="supprimer"><a href="/avion/supprimer/id/<?php echo $avion['avion_immatriculation'];?>"></a></td>
+		<td><?php echo $aeroport['aeroport_trigramme']; ?></td>
+		<td><?php echo $aeroport['aeroport_nom']; ?></td>
+		<td><?php echo $aeroport['aeroport_terminaux']; ?></td>
+		<td><?php echo $aeroport['aeroport_longueur_piste']; ?></td>
+		<td class="modifier"><a href="/aeroport/modifier/id/<?php echo $aeroport['aeroport_trigramme'];?>"><img src="../img/modifier.png" class="modifier" /></a></td>
+		<td class="supprimer"><a href="/aeroport/supprimer/id/<?php echo $aeroport['aeroport_trigramme'];?>"><img src="../img/supprimer.png" class="supprimer" /></a></td>
 	</tr>
 <?php
 }
 ?>
-</table>*/
+</table>

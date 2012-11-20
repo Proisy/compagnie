@@ -8,8 +8,13 @@ class AeroportController extends Extension_Controller_Action
 	}
 
 	public function indexAction(){
+		$page=$this->getRequest()->getParam('page');
+		if(!isset($page)) {
+			$page = 1;
+		}
 		$tableAeroport = new TAeroport;
-		$this->view->listeAeroport = $tableAeroport->getAllAeroports();
+		$this->view->listeAeroport = $tableAeroport->getSomeAeroports($page,15);
+		$this->view->nbAeroport = (($tableAeroport->countAeroport())/15);
 	}
 
 	public function viewAction() {
