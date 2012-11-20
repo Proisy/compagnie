@@ -1,24 +1,28 @@
-<h2>Liste des aeroports</h2>
+<?php 
+echo '<h2>Liste des aeroports</h2>
 	<br /><a href="/aeroport/ajouter"><input type="button" value="Ajouter" /></a><br /><br />
-<table>
+<table class="TabAeroport">
 	<tr>
 		<td>Trigramme</td>
 		<td>Nom</td>
 		<td>Terminaux</td>
 		<td>Longueur de piste</td>
-	</tr>
-<?php
+	</tr>';
 	foreach($this->listeAeroport as $aeroport) {
-?>
-	<tr>
-		<td><?php echo $aeroport['aeroport_trigramme']; ?></td>
-		<td><?php echo $aeroport['aeroport_nom']; ?></td>
-		<td><?php echo $aeroport['aeroport_terminaux']; ?></td>
-		<td><?php echo $aeroport['aeroport_longueur_piste']; ?></td>
-		<td class="modifier"><a href="/aeroport/modifier/id/<?php echo $aeroport['aeroport_trigramme'];?>"><img src="../img/modifier.png" class="modifier" /></a></td>
-		<td class="supprimer"><a href="/aeroport/supprimer/id/<?php echo $aeroport['aeroport_trigramme'];?>"><img src="../img/supprimer.png" class="supprimer" /></a></td>
-	</tr>
-<?php
+	echo'<tr>
+		<td>'.$aeroport['aeroport_trigramme'].'</td>
+		<td>'.$aeroport['aeroport_nom'].'</td>
+		<td>'.$aeroport['aeroport_terminaux'].'</td>
+		<td>'.$aeroport['aeroport_longueur_piste'].'</td>
+		<td class="modifier"><a href="/aeroport/modifier/id/'.$aeroport['aeroport_trigramme'].'"><img src="../img/modifier.png" class="modifier" /></a></td>
+		<td class="supprimer"><a href="/aeroport/supprimer/id/'.$aeroport['aeroport_trigramme'].'"><img src="../img/supprimer.png" class="supprimer" /></a></td>
+	</tr>';
 }
-?>
-</table>
+
+echo '</table>';
+
+
+
+echo '<div class="pagination"> Page - ';
+	for($i= 0; $i <= $this->nbAeroport; $i++) echo '<a href="/aeroport/index?page='.($i+1).'">'.($i+1).'</a> -';
+echo '</div>';

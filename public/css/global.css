@@ -32,6 +32,8 @@ table { border-collapse: collapse; border-spacing: 0; }
 	.titre{list-style:none;}
 	section{ background-color:#ebeef6; float:left; width:710px; height:700px; border-radius:10px; border:2px solid; margin-bottom:20px;}
 	#apps{ background-color:#f1f2f8; margin:20px; height:660px; }
+		.TabAeroport{border: 2px solid; border-radius: 10px;}
+			.TabAeroport td{border: 1px solid; padding:3px;}
 	footer{ background-color:#ebeef6; clear:left; border-radius:10px; border:2px solid; width:935px; margin-left:20px; }
 	/* Classes dédiées aux listes d'entités */
 	.modifier, .supprimer { height: 20px; width: 20px; }

@@ -32,7 +32,7 @@ class AeroportController extends Extension_Controller_Action
 	public function ajouterAction() {
 		$form = new Zend_Form;
 
-		$form->setAction('/aeroport/ajouter/')->setMethod('post');
+		$form->setAction('/aeroport/ajouter/')->setMethod('post')->setAttrib('class', 'aeroportAjouter');
 
 		$listeInput['aeroport_trigramme'] = new Zend_Form_Element_Text('aeroport_trigramme');
 		$listeInput['aeroport_nom'] = new Zend_Form_Element_Text('aeroport_nom');
@@ -59,6 +59,10 @@ class AeroportController extends Extension_Controller_Action
 				$data = $form->getValues();
 				$tableAeroport = new TAeroport;
 				$tableAeroport->addAeroport($data);
+				$this->_redirector->goToUrl('/aeroport/');
+			}
+			else {
+				$this->view->form = $form;
 			}
 		}
 		else {
@@ -102,6 +106,10 @@ class AeroportController extends Extension_Controller_Action
 			if($form->isValid($post)) {
 				$data = $form->getValues();
 				$tableAeroport->editAeroport($id,$data);
+				$this->_redirector->goToUrl('/aeroport/');
+			}
+			else {
+				$this->view->form = $form;
 			}
 		}
 		else {
@@ -119,6 +127,7 @@ class AeroportController extends Extension_Controller_Action
 			$post = $this->getRequest()->getPost();
 			$form->isValid($post);
 			$tableAeroport->deleteAeroport($id);
+			$this->_redirector->goToUrl('/aeroport/');
 		}
 		else {
 			$this->view->dataAeroport = $tableAeroport->getAeroport($id);
