@@ -20,8 +20,7 @@ class AvionController extends Extension_Controller_Action
 	public function viewAction() {
 		$id = $this->getRequest()->getParam('id');
 		if(!isset($id)){
-			$redirector = $this->_helper->getHelper('redirector');
-			$redirector->goToUrl('/avion/');
+			$this->redirector->goToUrl('/avion/');
 		}
 	}
 
@@ -64,6 +63,8 @@ class AvionController extends Extension_Controller_Action
 				$data = $form->getValues();
 				$tableAvion = new TAvion;
 				$tableAvion->addAvion($data);
+				$this->_flashMessenger->addMessages("Avion ajouté");
+				$this->_redirector->goToUrl("/avion/");
 			}
 		}
 		else {
@@ -114,6 +115,8 @@ class AvionController extends Extension_Controller_Action
 			if($form->isValid($post)) {
 				$data = $form->getValues();
 				$tableAvion->editAvion($id,$data);
+				$this->_flashMessenger->addMessages("Avion modifié");
+				$this->_redirector->goToUrl("/avion/");
 			}
 		}
 		else {

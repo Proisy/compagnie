@@ -3,12 +3,18 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le : Mer 07 Novembre 2012 à 20:38
+-- Généré le : Lun 19 Novembre 2012 à 10:47
 -- Version du serveur: 5.5.28
 -- Version de PHP: 5.3.10-1ubuntu3.4
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Base de données: `compagnie`
@@ -32,13 +38,14 @@ CREATE TABLE IF NOT EXISTS `aeroport` (
 -- Contenu de la table `aeroport`
 --
 
-INSERT INTO `aeroport` VALUES('CDG', 'Roissy Charles de Gaulle', 25, 3000);
-INSERT INTO `aeroport` VALUES('JFK', 'John F. Kennedy', 35, 3500);
-INSERT INTO `aeroport` VALUES('LHR', 'Heathrow', 20, 3000);
-INSERT INTO `aeroport` VALUES('NTE', 'Nantes Atlantique', 8, 2000);
-INSERT INTO `aeroport` VALUES('ORY', 'Paris Orly', 15, 3000);
-INSERT INTO `aeroport` VALUES('SYD', 'Kingsford Smith International Airport', 3, 3962);
-INSERT INTO `aeroport` VALUES('YYZ', 'Toronto Pearson', 3, 2500);
+INSERT INTO `aeroport` (`aeroport_trigramme`, `aeroport_nom`, `aeroport_terminaux`, `aeroport_longueur_piste`) VALUES
+('CDG', 'Roissy Charles de Gaulle', 25, 3000),
+('JFK', 'John F. Kennedy', 35, 3500),
+('LHR', 'Heathrow', 20, 3000),
+('NTE', 'Nantes Atlantique', 8, 2000),
+('ORY', 'Paris Orly', 15, 3000),
+('SYD', 'Kingsford Smith International Airport', 3, 3962),
+('YYZ', 'Toronto Pearson', 3, 2500);
 
 -- --------------------------------------------------------
 
@@ -58,13 +65,15 @@ CREATE TABLE IF NOT EXISTS `aeroport_ville` (
 -- Contenu de la table `aeroport_ville`
 --
 
-INSERT INTO `aeroport_ville` VALUES('CDG', 1);
-INSERT INTO `aeroport_ville` VALUES('ORY', 1);
-INSERT INTO `aeroport_ville` VALUES('NTE', 2);
-INSERT INTO `aeroport_ville` VALUES('LHR', 3);
-INSERT INTO `aeroport_ville` VALUES('JFK', 4);
-INSERT INTO `aeroport_ville` VALUES('YYZ', 7);
-INSERT INTO `aeroport_ville` VALUES('SYD', 8);
+INSERT INTO `aeroport_ville` (`aeroport_trigramme`, `id_ville`) VALUES
+('CDG', 1),
+('NTE', 1),
+('ORY', 1),
+('NTE', 2),
+('LHR', 3),
+('JFK', 4),
+('YYZ', 7),
+('SYD', 8);
 
 -- --------------------------------------------------------
 
@@ -98,9 +107,10 @@ CREATE TABLE IF NOT EXISTS `avion` (
 -- Contenu de la table `avion`
 --
 
-INSERT INTO `avion` VALUES(6526, 4, 2500, 300);
-INSERT INTO `avion` VALUES(566213564, 1, 200, 800);
-INSERT INTO `avion` VALUES(2147483647, 1, 200, 800);
+INSERT INTO `avion` (`avion_immatriculation`, `id_modele`, `avion_heure_vol_total`, `avion_heure_vol_revision`) VALUES
+(6526, 4, 2500, 300),
+(566213564, 1, 200, 800),
+(2147483647, 1, 200, 800);
 
 -- --------------------------------------------------------
 
@@ -115,6 +125,13 @@ CREATE TABLE IF NOT EXISTS `certification` (
   PRIMARY KEY (`id_certification`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Contenu de la table `certification`
+--
+
+INSERT INTO `certification` (`id_certification`, `certification_nom`, `certification_validite`) VALUES
+(0, 'test2', 12);
+
 -- --------------------------------------------------------
 
 --
@@ -122,13 +139,21 @@ CREATE TABLE IF NOT EXISTS `certification` (
 --
 
 CREATE TABLE IF NOT EXISTS `certification_modele` (
-  `id_certification_modele` int(11) NOT NULL AUTO_INCREMENT,
   `id_certification` int(11) NOT NULL,
   `id_modele` int(11) NOT NULL,
-  PRIMARY KEY (`id_certification_modele`),
+  PRIMARY KEY (`id_certification`,`id_modele`),
   KEY `id_certification` (`id_certification`,`id_modele`),
   KEY `id_modele` (`id_modele`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `certification_modele`
+--
+
+INSERT INTO `certification_modele` (`id_certification`, `id_modele`) VALUES
+(0, 1),
+(0, 4),
+(0, 6);
 
 -- --------------------------------------------------------
 
@@ -183,11 +208,12 @@ CREATE TABLE IF NOT EXISTS `modele` (
 -- Contenu de la table `modele`
 --
 
-INSERT INTO `modele` VALUES(1, 'Airbus', 'A380-800', 15200, 300, 450, 600, 800);
-INSERT INTO `modele` VALUES(4, 'Airbus', 'A320', 5950, 300, 250, 300, 600);
-INSERT INTO `modele` VALUES(5, 'Boeing', '737-600', 5970, 500, 800, 340, 700);
-INSERT INTO `modele` VALUES(6, 'Boeing', '737-800', 5765, 800, 500, 280, 300);
-INSERT INTO `modele` VALUES(7, 'Airbus', 'A330-300', 10500, 1220, 1500, 300, 500);
+INSERT INTO `modele` (`id_modele`, `modele_marque`, `modele_reference`, `modele_rayon`, `modele_piste_att`, `modele_piste_dec`, `modele_nb_passagers`, `modele_diff_revision`) VALUES
+(1, 'Airbus', 'A380-800', 15200, 300, 450, 600, 800),
+(4, 'Airbus', 'A320', 5950, 300, 250, 300, 600),
+(5, 'Boeing', '737-600', 5970, 500, 800, 340, 700),
+(6, 'Boeing', '737-800', 5765, 800, 500, 280, 300),
+(7, 'Airbus', 'A330-300', 10500, 1220, 1500, 300, 500);
 
 -- --------------------------------------------------------
 
@@ -206,21 +232,22 @@ CREATE TABLE IF NOT EXISTS `pays` (
 -- Contenu de la table `pays`
 --
 
-INSERT INTO `pays` VALUES(1, 'France', 'Europe');
-INSERT INTO `pays` VALUES(2, 'Allemagne', 'Europe');
-INSERT INTO `pays` VALUES(3, 'Grande Bretagne', 'Europe');
-INSERT INTO `pays` VALUES(4, 'Etats-Unis', 'Amérique');
-INSERT INTO `pays` VALUES(5, 'Canada', 'Amérique');
-INSERT INTO `pays` VALUES(6, 'Mexique', 'Amérique');
-INSERT INTO `pays` VALUES(7, 'Russie', 'Asie');
-INSERT INTO `pays` VALUES(8, 'Chine', 'Asie');
-INSERT INTO `pays` VALUES(9, 'Inde', 'Asie');
-INSERT INTO `pays` VALUES(10, 'Japon', 'Asie');
-INSERT INTO `pays` VALUES(11, 'Italie', 'Europe');
-INSERT INTO `pays` VALUES(12, 'Espagne', 'Europe');
-INSERT INTO `pays` VALUES(13, 'Australie', 'Océanie');
-INSERT INTO `pays` VALUES(14, 'Nouvelle Zélande', 'Océanie');
-INSERT INTO `pays` VALUES(15, 'Suisse', 'Europe');
+INSERT INTO `pays` (`id_pays`, `pays_nom`, `pays_continent`) VALUES
+(1, 'France', 'Europe'),
+(2, 'Allemagne', 'Europe'),
+(3, 'Grande Bretagne', 'Europe'),
+(4, 'Etats-Unis', 'AmÃ©rique'),
+(5, 'Canada', 'AmÃ©rique'),
+(6, 'Mexique', 'AmÃ©rique'),
+(7, 'Russie', 'Asie'),
+(8, 'Chine', 'Asie'),
+(9, 'Inde', 'Asie'),
+(10, 'Japon', 'Asie'),
+(11, 'Italie', 'Europe'),
+(12, 'Espagne', 'Europe'),
+(13, 'Australie', 'OcÃ©anie'),
+(14, 'Nouvelle ZÃ©lande', 'OcÃ©anie'),
+(15, 'Suisse', 'Europe');
 
 -- --------------------------------------------------------
 
@@ -271,12 +298,22 @@ CREATE TABLE IF NOT EXISTS `technicien` (
 
 CREATE TABLE IF NOT EXISTS `user` (
   `id_user` int(11) NOT NULL AUTO_INCREMENT,
+  `user_login` varchar(100) NOT NULL,
+  `user_password` varchar(32) NOT NULL,
   `user_nom` varchar(255) NOT NULL,
   `user_prenom` varchar(255) NOT NULL,
   `user_adresse` varchar(255) NOT NULL,
   `user_telephone` varchar(12) NOT NULL,
+  `user_role` varchar(255) NOT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `user`
+--
+
+INSERT INTO `user` (`id_user`, `user_login`, `user_password`, `user_nom`, `user_prenom`, `user_adresse`, `user_telephone`, `user_role`) VALUES
+(1, 'killian', '5f4dcc3b5aa765d61d8327deb882cf99', 'BLAIS', 'Killian', '77 rue du colonel Fabien, 02100Saint Quentin', '0664817396', '');
 
 -- --------------------------------------------------------
 
@@ -296,23 +333,24 @@ CREATE TABLE IF NOT EXISTS `ville` (
 -- Contenu de la table `ville`
 --
 
-INSERT INTO `ville` VALUES(1, 'Paris', 1);
-INSERT INTO `ville` VALUES(2, 'Nantes', 1);
-INSERT INTO `ville` VALUES(3, 'London', 3);
-INSERT INTO `ville` VALUES(4, 'New York', 4);
-INSERT INTO `ville` VALUES(5, 'Boston', 4);
-INSERT INTO `ville` VALUES(6, 'Berlin', 2);
-INSERT INTO `ville` VALUES(7, 'Toronto', 5);
-INSERT INTO `ville` VALUES(8, 'Sydney', 13);
-INSERT INTO `ville` VALUES(9, 'Mexico', 6);
-INSERT INTO `ville` VALUES(10, 'Moscou', 7);
-INSERT INTO `ville` VALUES(11, 'PÃ©kin', 8);
-INSERT INTO `ville` VALUES(12, 'Bombay', 9);
-INSERT INTO `ville` VALUES(13, 'Tokyo', 10);
-INSERT INTO `ville` VALUES(14, 'Rome', 11);
-INSERT INTO `ville` VALUES(15, 'Madrid', 12);
-INSERT INTO `ville` VALUES(16, 'Berne', 15);
-INSERT INTO `ville` VALUES(17, 'Aukland', 14);
+INSERT INTO `ville` (`id_ville`, `ville_nom`, `id_pays`) VALUES
+(1, 'Paris', 1),
+(2, 'Nantes', 1),
+(3, 'London', 3),
+(4, 'New York', 4),
+(5, 'Boston', 4),
+(6, 'Berlin', 2),
+(7, 'Toronto', 5),
+(8, 'Sydney', 13),
+(9, 'Mexico', 6),
+(10, 'Moscou', 7),
+(11, 'PÃ©kin', 8),
+(12, 'Bombay', 9),
+(13, 'Tokyo', 10),
+(14, 'Rome', 11),
+(15, 'Madrid', 12),
+(16, 'Berne', 15),
+(17, 'Aukland', 14);
 
 -- --------------------------------------------------------
 
@@ -343,8 +381,8 @@ CREATE TABLE IF NOT EXISTS `vol` (
 -- Contraintes pour la table `aeroport_ville`
 --
 ALTER TABLE `aeroport_ville`
-  ADD CONSTRAINT `aeroport_ville_ibfk_4` FOREIGN KEY (`id_ville`) REFERENCES `ville` (`id_ville`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `aeroport_ville_ibfk_3` FOREIGN KEY (`aeroport_trigramme`) REFERENCES `aeroport` (`aeroport_trigramme`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `aeroport_ville_ibfk_3` FOREIGN KEY (`aeroport_trigramme`) REFERENCES `aeroport` (`aeroport_trigramme`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `aeroport_ville_ibfk_4` FOREIGN KEY (`id_ville`) REFERENCES `ville` (`id_ville`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `avion`
@@ -356,15 +394,15 @@ ALTER TABLE `avion`
 -- Contraintes pour la table `certification_modele`
 --
 ALTER TABLE `certification_modele`
-  ADD CONSTRAINT `certification_modele_ibfk_4` FOREIGN KEY (`id_modele`) REFERENCES `modele` (`id_modele`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `certification_modele_ibfk_3` FOREIGN KEY (`id_certification`) REFERENCES `certification` (`id_certification`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `certification_modele_ibfk_3` FOREIGN KEY (`id_certification`) REFERENCES `certification` (`id_certification`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `certification_modele_ibfk_4` FOREIGN KEY (`id_modele`) REFERENCES `modele` (`id_modele`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `ligne`
 --
 ALTER TABLE `ligne`
-  ADD CONSTRAINT `ligne_ibfk_4` FOREIGN KEY (`id_aeroport_arrivee`) REFERENCES `aeroport` (`aeroport_trigramme`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `ligne_ibfk_3` FOREIGN KEY (`id_aeroport_depart`) REFERENCES `aeroport` (`aeroport_trigramme`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `ligne_ibfk_3` FOREIGN KEY (`id_aeroport_depart`) REFERENCES `aeroport` (`aeroport_trigramme`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `ligne_ibfk_4` FOREIGN KEY (`id_aeroport_arrivee`) REFERENCES `aeroport` (`aeroport_trigramme`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `pilote`
@@ -376,8 +414,8 @@ ALTER TABLE `pilote`
 -- Contraintes pour la table `pilote_certification`
 --
 ALTER TABLE `pilote_certification`
-  ADD CONSTRAINT `pilote_certification_ibfk_4` FOREIGN KEY (`id_certification`) REFERENCES `certification` (`id_certification`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `pilote_certification_ibfk_3` FOREIGN KEY (`id_pilote`) REFERENCES `pilote` (`id_pilote`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `pilote_certification_ibfk_3` FOREIGN KEY (`id_pilote`) REFERENCES `pilote` (`id_pilote`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pilote_certification_ibfk_4` FOREIGN KEY (`id_certification`) REFERENCES `certification` (`id_certification`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `technicien`
@@ -395,6 +433,10 @@ ALTER TABLE `ville`
 -- Contraintes pour la table `vol`
 --
 ALTER TABLE `vol`
-  ADD CONSTRAINT `vol_ibfk_6` FOREIGN KEY (`id_ligne`) REFERENCES `ligne` (`id_ligne`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `vol_ibfk_4` FOREIGN KEY (`id_pilote`) REFERENCES `pilote` (`id_pilote`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `vol_ibfk_5` FOREIGN KEY (`id_copilote`) REFERENCES `pilote` (`id_pilote`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `vol_ibfk_5` FOREIGN KEY (`id_copilote`) REFERENCES `pilote` (`id_pilote`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `vol_ibfk_6` FOREIGN KEY (`id_ligne`) REFERENCES `ligne` (`id_ligne`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

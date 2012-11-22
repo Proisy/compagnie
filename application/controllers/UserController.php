@@ -7,7 +7,7 @@ class UserController extends Extension_Controller_Action
 	}
 
 	public function indexAction(){
-		$this->_helper->actionStack('menu', 'maintenance', 'default', array());
+		$this->_helper->actionStack('menu', 'drh', 'default', array());
 		$tableUser = new TUser;
 		$this->view->listeUsers = $tableUser->getAllUsers();
 	}

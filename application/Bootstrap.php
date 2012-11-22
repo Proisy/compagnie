@@ -22,11 +22,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap{
 	}
 
 	protected function _initViewData()
-    {
-        $this->bootstrap('View');
-        $view = $this->getResource('View');
-        $view->doctype('HTML5');
-    }
+	{
+		$this->bootstrap('View');
+		$view = $this->getResource('View');
+		$view->doctype('HTML5');
+	}
 
 	protected function _initDb() {
 		$db = Zend_Db::factory(Zend_Registry::get('config')->database);
@@ -38,5 +38,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap{
 		$autoloader = Zend_Loader_Autoloader::getInstance();
 		$autoloader->registerNamespace('Extension_');
 		$autoloader->setFallbackAutoloader(true);
+	}
+
+	protected function _initAcl() {
+		$acl = new Zend_Config_Ini(APPLICATION_PATH.'/config/acl.ini', APPLICATION_ENV);
+		Zend_Registry::set('acl', $acl);
+
+		$this->bootstrap('frontcontroller');
+		$front = Zend_Controller_Front::getInstance();
+		$aclPlugin = new Extension_Controller_Plugin_Acl(new Extension_Acl());
+		$front->registerPlugin($aclPlugin);
 	}
 }
