@@ -4,17 +4,19 @@ echo '<h2>Liste des Vols</h2>
 <table class="TabVol">
 	<tr>
 		<td>Numéro Vol</td>
+		<td>Avion</td>
 		<td>Pilote</td>
 		<td>Copilote</td>
 		<td>Information</td>
 		<td>date</td>
 		<td>depart prévu</td>
 		<td>arrivée prévue</td>
-		<td>Numéro ligne</td>
+		<td>Nom de la ligne</td>
 	</tr>';
 	foreach($this->listeVols as $vol) {
 	echo'<tr>
 		<td>'.$vol['id_vol'].'</td>
+		<td>'.$vol['immatriculation'].'</td>
 		<td>'.$vol['id_pilote'].'</td>
 		<td>'.$vol['id_copilote'].'</td>
 		<td>'.$vol['vol_information'].'</td>
@@ -28,5 +30,5 @@ echo '<h2>Liste des Vols</h2>
 	}
 
 echo '</table><br /><div class="pagination"> Page - ';
-	for($i= 0; $i <= $this->nbVols; $i++) echo '<a href="/vols/index?page='.($i+1).'">'.($i+1).'</a> -';
+	for($i= 0; $i <= $this->nbVols; $i++) echo '<a href="/vol/index?page='.($i+1).'">'.($i+1).'</a> -';
 echo '</div>';

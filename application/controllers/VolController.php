@@ -11,7 +11,7 @@ class VolController extends Extension_Controller_Action
 		if(!isset($page)) {
 			$page = 1;
 		}
-		$tableVol = new TVol;
+		$tableVol = new TVol;		
 		$this->view->listeVols = $tableVol->getSomeVols($page,15);
 		/*if(($tableVol->countVols()) != 0) {
 			$this->view->nbVols = (($tableVol->countVols())/15);
@@ -94,7 +94,18 @@ class VolController extends Extension_Controller_Action
 										->addMultiOptions($heure);
 			$listeInput['minute_arrivee']->removeDecorator('Label')
 										 ->addMultiOptions($minute);
-
+			$dateDepart = new Zend_Date();
+			$dateArrivee = new Zend_Date();
+			// Affecter une nouvelle date
+			$dateDepart->set(''.$listeInput['heure_depart'].':'.$listeInput['minute_depart'].':00',Zend_Date::TIMES);
+			$dateArrivee->set(''.$listeInput['heure_arrivee'].':'.$listeInput['minute_arrivee'].':00',Zend_Date::TIMES);
+			unset($listeInput['heure_depart']);
+			unset($listeInput['minute_depart']);
+			unset($listeInput['heure_arrivee']);
+			unset($listeInput['minute_arrivee']);
+			$listeInput['id_aeroport_depart'] = $dateDepart;
+			Zend_Debug::dump($listeInput['id_aeroport_depart']);exit();
+			$listeInput['id_aeroport_arrivee'] = $dateArrivee;
 			foreach ($listeInput as $key=>$value) {
 				$value->setRequired(true);
 				$form->addElement($value);

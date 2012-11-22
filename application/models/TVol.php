@@ -12,7 +12,7 @@
  */
 class TVol extends Zend_Db_Table_Abstract {
 
-	protected $_name = 'vol';
+	protected $_name = 'vols';
 	protected $_primary = 'id_vol';
 
 	/**
