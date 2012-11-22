@@ -1,0 +1,32 @@
+<?php 
+echo '<h2>Liste des Vols</h2>
+	<br /><a href="/vol/ajouter"><input type="button" value="Ajouter" /></a><br /><br />
+<table class="TabVol">
+	<tr>
+		<td>Numéro Vol</td>
+		<td>Pilote</td>
+		<td>Copilote</td>
+		<td>Information</td>
+		<td>date</td>
+		<td>depart prévu</td>
+		<td>arrivée prévue</td>
+		<td>Numéro ligne</td>
+	</tr>';
+	foreach($this->listeVols as $vol) {
+	echo'<tr>
+		<td>'.$vol['id_vol'].'</td>
+		<td>'.$vol['id_pilote'].'</td>
+		<td>'.$vol['id_copilote'].'</td>
+		<td>'.$vol['vol_information'].'</td>
+		<td>'.$vol['vol_date'].'</td>
+		<td>'.$vol['vol_depart_prevu'].'</td>
+		<td>'.$vol['vol_arrivee_prevue'].'</td>
+		<td>'.$vol['id_ligne'].'</td>
+		<td class="modifier"><a href="/vols/modifier/id/'.$vol['id_vol'].'"><img src="../img/modifier.png" class="modifier" /></a></td>
+		<td class="supprimer"><a href="/vols/supprimer/id/'.$vol['id_vol'].'"><img src="../img/supprimer.png" class="supprimer" /></a></td>
+	</tr>';
+	}
+
+echo '</table><br /><div class="pagination"> Page - ';
+	for($i= 0; $i <= $this->nbVols; $i++) echo '<a href="/vols/index?page='.($i+1).'">'.($i+1).'</a> -';
+echo '</div>';

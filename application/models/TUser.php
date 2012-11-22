@@ -93,4 +93,12 @@ class TUser extends Zend_Db_Table_Abstract {
 		}
 		return $this->fetchAll($requete)->toArray();
 	}
+
+	public function getPilote(){
+		$requete = $this->select()->from(array('u'=>$this->_name), array('u.user_prenom','u.user_nom'))
+								  ->setIntegrityCheck(false)
+								  ->join(array('p' => 'pilote'), 'u.id_user = p.id_user', array('id_pilote'))
+								  ->where('u.user_role = "pilote"');
+		return $this->fetchAll($requete)->toArray();
+	}
 }
