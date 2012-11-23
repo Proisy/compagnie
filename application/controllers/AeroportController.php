@@ -40,7 +40,7 @@ class AeroportController extends Extension_Controller_Action
 		$listeInput['aeroport_longueur_piste'] = new Zend_Form_Element_Text('aeroport_longueur_piste');
 
 		$listeInput['aeroport_trigramme']->setLabel('Trigramme')
-						->addValidator(new Zend_Validate_Alpha())
+						->addValidator(new Zend_Validate_Alnum())
 						->addValidator(new Zend_Validate_StringLength(array('min'=>3,'max'=>3)));
 		$listeInput['aeroport_nom']->setLabel('Nom')->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true)));
 		$listeInput['aeroport_terminaux']->setLabel('Nombre de terminaux')->addValidator(new Zend_Validate_Digits());

@@ -16,7 +16,7 @@ class UserController extends Extension_Controller_Action
 		$id = $this->getRequest()->getParam('id');
 		if(!isset($id)){
 			$redirector = $this->_helper->getHelper('redirector');
-			$redirector->goToUrl('/avion/');
+			$redirector->goToUrl('/user/');
 		}
 		else {
 			
@@ -32,6 +32,9 @@ class UserController extends Extension_Controller_Action
 		$listeInput['user_prenom'] = new Zend_Form_Element_Text('user_prenom');
 		$listeInput['user_adresse'] = new Zend_Form_Element_Textarea('user_adresse');
 		$listeInput['user_telephone'] = new Zend_Form_Element_Text('user_telephone');
+		$listeInput['user_login'] = new Zend_Form_Element_Text('user_login');
+		$listeInput['user_password'] = new Zend_Form_Element_Text('user_password');
+		$listeInput['user_role'] = new Zend_Form_Element_Select('user_role');
 		
 		$listeInput['user_nom']->setLabel('Nom de famille')
 									->addValidator(new Zend_Validate_Alpha(array('allowWhiteSpace' => true)));
@@ -42,6 +45,19 @@ class UserController extends Extension_Controller_Action
 		$listeInput['user_telephone']->setLabel('Numéro de téléphone')
 									->addValidator(new Zend_Validate_Alnum())
 									->addValidator(new Zend_Validate_Regex(array('pattern'=>'/^(01|02|03|04|05|06|08)[0-9]{8}/')));
+		$listeInput['user_login']->setLabel('Identifiant')
+									->addValidator(new Zend_Validate_Alpha());
+		$listeInput['user_prenom']->setLabel('Prénom')
+									->addValidator(new Zend_Validate_Alpha(array('allowWhiteSpace' => true)));
+		$listeRoles = array('pilote'=>'Pilote',
+							'drh'=>'DRH',
+							'maintenance'=>'Technicien de maintenance',
+							'commercial'=>'Service commercial',
+							'direction'=>'Direction stratégique',
+							'planning'=>'Service planning',
+							'logistique'=>'Service logistique');
+		$listeInput['user_role']->setLabel('Type d\'utilisateur')
+								->addMultiOptions($listeRoles);
 
 		foreach ($listeInput as $key=>$value) {
 			$value->setRequired(true);
@@ -57,6 +73,7 @@ class UserController extends Extension_Controller_Action
 
 			$tableUser = new TUser;
 			$tableUser->addUser($data);
+			$this->_redirector->goToUrl('/user/');
 		}
 		else {
 			$this->view->form = $form;
@@ -76,6 +93,7 @@ class UserController extends Extension_Controller_Action
 		$listeInput['user_prenom'] = new Zend_Form_Element_Text('user_prenom');
 		$listeInput['user_adresse'] = new Zend_Form_Element_Textarea('user_adresse');
 		$listeInput['user_telephone'] = new Zend_Form_Element_Text('user_telephone');
+		$listeInput['user_role'] = new Zend_Form_Element_Select('user_role');
 		
 		$listeInput['user_nom']->setLabel('Nom de famille')
 									->addValidator(new Zend_Validate_Alpha(array('allowWhiteSpace' => true)));
@@ -86,6 +104,15 @@ class UserController extends Extension_Controller_Action
 		$listeInput['user_telephone']->setLabel('Numéro de téléphone')
 									->addValidator(new Zend_Validate_Alnum())
 									->addValidator(new Zend_Validate_Regex(array('pattern'=>'/^(01|02|03|04|05|06|08)[0-9]{8}/')));
+		$listeRoles = array('pilote'=>'Pilote',
+							'drh'=>'DRH',
+							'maintenance'=>'Technicien de maintenance',
+							'commercial'=>'Service commercial',
+							'direction'=>'Direction stratégique',
+							'planning'=>'Service planning',
+							'logistique'=>'Service logistique');
+		$listeInput['user_role']->setLabel('Type d\'utilisateur')
+								->addMultiOptions($listeRoles);
 
 		$dataOld = $tableUser->getUser($id);
 
@@ -102,6 +129,7 @@ class UserController extends Extension_Controller_Action
 			$data = $form->getValues();
 
 			$tableUser->edituser($id,$data);
+			$this->_redirector->goToUrl('/user/');
 		}
 		else {
 			$this->view->form = $form;
@@ -115,6 +143,7 @@ class UserController extends Extension_Controller_Action
 		if($this->getRequest()->isPost()) {
 			$post = $this->getRequest()->getPost();
 			$data = $tableUser->deleteUser($id);
+			$this->_redirector->goToUrl('/user/');
 		}
 		else {
 			echo $form;

@@ -38,7 +38,7 @@ class IndexController extends Extension_Controller_Action
 					$dbAuthAdapter->setCredential($data['password']);
 					$res = $this->_auth->authenticate($dbAuthAdapter);
 					if($res->isValid()) {
-						$this->_auth->getStorage()->write($dbAuthAdapter->getResultRowObject(array('id_user','user_role'),null));
+						$this->_auth->getStorage()->write($dbAuthAdapter->getResultRowObject(array('user_login','user_role'),null));
 						$this->_flashMessenger->addMessage('Vous vous êtes connecté avec succès');
 						$this->_redirector->goToUrl('/'.$this->_auth->getIdentity()->user_role.'/');
 					}

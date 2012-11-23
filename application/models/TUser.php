@@ -1,7 +1,7 @@
 <?php
 /**
  * Structure de la table:
- * 		id_user					INT
+ * 		user_login				VARCHAR(50)
  * 		user_nom				VARCHAR(255)
  *  	user_prenom				VARCHAR(255)
  *  	user_adresse			VARCHAR(255)
@@ -10,7 +10,7 @@
 class TUser extends Zend_Db_Table_Abstract {
 
 	protected $_name = 'user';
-	protected $_primary = 'id_user';
+	protected $_primary = 'user_login';
 
 	/**
 	 * Ajoute un utilisateur
@@ -61,7 +61,7 @@ class TUser extends Zend_Db_Table_Abstract {
 	 * @return array
 	 */
 	public function getUser($id,$columns='*') {
-		$requete = $this->select()->from($this, $columns)->where('id_user = ?', $id);
+		$requete = $this->select()->from($this, $columns)->where('user_login = ?', $id);
 		$data = $this->fetchAll($requete)->toArray();
 		return $data[0];
 	}
@@ -74,7 +74,6 @@ class TUser extends Zend_Db_Table_Abstract {
 	 */
 	public function getSomeUsers($minInt, $maxInt,$columns='*') {
 		$requete = $this->select()->from($this, $columns)
-			->order('id_user')
 			->limit($maxInt-$minInt, $minInt);
 		return $this->fetchAll($requete)->toArray();
 	}
@@ -94,11 +93,9 @@ class TUser extends Zend_Db_Table_Abstract {
 		return $this->fetchAll($requete)->toArray();
 	}
 
-	public function getPilote(){
-		$requete = $this->select()->from(array('u'=>$this->_name), array('u.user_prenom','u.user_nom'))
-								  ->setIntegrityCheck(false)
-								  ->join(array('p' => 'pilote'), 'u.id_user = p.id_user', array('id_pilote'))
-								  ->where('u.user_role = "pilote"');
+	public function getAllPilotes($columns='*'){
+		$requete = $this->select()->from($this, $columns)
+						->where('user_role = "pilote"');
 		return $this->fetchAll($requete)->toArray();
 	}
 }
