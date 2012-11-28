@@ -25,7 +25,12 @@ class TAvion extends Zend_Db_Table_Abstract {
 		foreach ($data as $key => $value) {
 			$avion->$key = $value;
 		}
-		$avion->save();
+		if($avion->save()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**
@@ -38,7 +43,12 @@ class TAvion extends Zend_Db_Table_Abstract {
 		foreach ($data as $key => $value) {
 			$avion->$key = $value;
 		}
-		$avion->save();
+		if($avion->save()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**
