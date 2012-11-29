@@ -13,12 +13,7 @@ class VolController extends Extension_Controller_Action
 		}
 		$tableVol = new TVol;		
 		$this->view->listeVols = $tableVol->getSomeVols($page,15);
-		/*if(($tableVol->countVols()) != 0) {
-			$this->view->nbVols = (($tableVol->countVols())/15);
-		}
-		else {
-			$this->view->nbVols = 0;
-		}*/
+		$this->view->nbVols = (($tableVol->countVols())/15);
 	}
 
 	public function viewAction() {
@@ -104,7 +99,7 @@ class VolController extends Extension_Controller_Action
 			unset($listeInput['heure_arrivee']);
 			unset($listeInput['minute_arrivee']);
 			$listeInput['id_aeroport_depart'] = $dateDepart;
-			Zend_Debug::dump($listeInput['id_aeroport_depart']);exit();
+			//Zend_Debug::dump($listeInput['id_aeroport_depart']);exit();
 			$listeInput['id_aeroport_arrivee'] = $dateArrivee;
 			foreach ($listeInput as $key=>$value) {
 				$value->setRequired(true);

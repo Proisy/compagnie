@@ -84,9 +84,9 @@ class TVol extends Zend_Db_Table_Abstract {
 	}
 
 	public function countVols(){
-			$requete = $this->select()->from($this, array('count(*) as $nbVols'));
+			$requete = $this->select()->from($this, array('count(*) as nbVols'));
 			$data = $this->fetchAll($requete);
-			return $data[0]->$nbVols; 
+			return $data[0]->nbVols; 
 	}
 
 	/**

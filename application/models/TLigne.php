@@ -15,7 +15,7 @@ class TLigne extends Zend_Db_Table_Abstract {
 	 * Ajoute un ligne
 	 * @param array $data
 	 */
-	public function addligne($data) {
+	public function addLigne($data) {
 		$ligne = $this->createRow();
 		foreach ($data as $key => $value) {
 			$ligne->$key = $value;
@@ -28,7 +28,7 @@ class TLigne extends Zend_Db_Table_Abstract {
 	 * @param int $id
 	 * @param array $data
 	 */
-	public function editligne($id, $data) {
+	public function editLigne($id, $data) {
 		$ligne = $this->find($id)->current();
 		foreach ($data as $key => $value) {
 			$ligne->$key = $value;
@@ -40,7 +40,7 @@ class TLigne extends Zend_Db_Table_Abstract {
 	 * Supprime un ligne
 	 * @param int $id
 	 */
-	public function deleteligne($id) {
+	public function deleteLigne($id) {
 		$ligne = $this->find($id)->current();
 		$ligne->delete();
 	}
@@ -72,7 +72,7 @@ class TLigne extends Zend_Db_Table_Abstract {
 	 * @param array $columns
 	 * @return array
 	 */
-	public function getligne($id, $columns='*') {
+	public function getLigne($id, $columns='*') {
 		$requete = $this->select()->from($this, $columns)->where('id_ligne = ?', $id);
 		$data = $this->fetchAll($requete)->toArray();
 		return $data[0];
@@ -85,15 +85,18 @@ class TLigne extends Zend_Db_Table_Abstract {
 	 * @param array $columns
 	 * @return array
 	 */
-	public function getSomelignes($page, $nbligne, $columns='*') {
-		$requete = $this->select()->from($this, $columns)->limitPage($page,$nbligne);
+	public function getSomeLignes($page, $nbligne, $columns='*') {
+		$requete = $this->select()->setIntegrityCheck(false)
+								  ->from(array('l'=>$this->_name, $columns))
+								  ->join(array('a'=>'aeroport'), 'l.id_aeroport_depart = a.aeroport_trigramme', array('aeroport_nom'))
+								   ->limitPage($page,$nbligne);
 		return $this->fetchAll($requete)->toArray();
 	}
 
-	public function countlignes(){
-			$requete = $this->select()->from($this, array('count(*) as $nblignes'));
+	public function countLignes(){
+			$requete = $this->select()->from($this, array('count(*) as nbLignes'));
 			$data = $this->fetchAll($requete);
-			return $data[0]->$nblignes; 
+			return $data[0]->nbLignes; 
 	}
 
 	/**
@@ -104,7 +107,7 @@ class TLigne extends Zend_Db_Table_Abstract {
 	 *
 	 * @todo à refaire
 	 */
-	public function getlignesBy($data, $columns='*') {
+	public function getLignesBy($data, $columns='*') {
 		$requete = $this->select()->from($this, $columns);
 		foreach ($data as $arr) {
 			$requete->where($arr['column']. ' ' .$arr['operator'] .' ?', $arr['value']);
