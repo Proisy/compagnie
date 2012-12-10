@@ -4,7 +4,6 @@ class LigneController extends Extension_Controller_Action
 {
 	public function init(){
 		parent::init();
-		$this->_helper->actionStack('menu', 'direction', 'default', array());
 	}
 
 	public function indexAction(){
@@ -13,10 +12,9 @@ class LigneController extends Extension_Controller_Action
 			$page = 1;
 		}
 		$tableLigne = new TLigne;
-		$tableAeroport = new TAeroport;
-		$dataLigne = $tableLigne->getSomeLignes()
-		// $this->view->listeLigne = $tableLigne->getSomeLignes($page,15);
-		// $this->view->nbLigne = (($tableLigne->countLignes())/15);
+		$this->view->listeLignes = $tableLigne->getSomeLignesFK($page, 15);
+
+		$this->view->nbPages = ($tableLigne->countLignes())/15;
 	}
 
 	public function viewAction() {
@@ -50,9 +48,7 @@ class LigneController extends Extension_Controller_Action
 			$listeInput['id_aeroport_depart']->addMultiOptions(array($value['aeroport_trigramme'] => $value['aeroport_nom']));
 			$listeInput['id_aeroport_arrivee']->addMultiOptions(array($value['aeroport_trigramme'] => $value['aeroport_nom']));
 		}
-		$listeInput['ligne_periodicite']->addMultiOptions(array('1' => 'Journalier', '2' => 'Hebdomadaire', '3' => 'mensuelle', '4' => 'Unique'));
-		
-
+		$listeInput['ligne_periodicite']->addMultiOptions(array('journalier' => 'Journalier', 'hebdomadaire' => 'Hebdomadaire', 'mensuelle' => 'Mensuelle', 'unique' => 'Unique'));
 
 		foreach ($listeInput as $key=>$value) {
 			$value->setRequired(true);
@@ -82,28 +78,39 @@ class LigneController extends Extension_Controller_Action
 		$id = $this->getRequest()->getParam('id');
 		$tablePays = new TPays();
 		$listePays = $tablePays->getAllPays();
-		$tableligne = new Tligne;
+
+		$tableAeroport = new TAeroport();
+		$listeAeroports = $tableAeroport->getAllAeroports(array('aeroport_trigramme','aeroport_nom'));
+
+		$tableLigne = new TLigne();
+		$dataLigne = $tableLigne->getLigne($id);
 
 		$form = new Zend_Form;
 
 		$form->setAction('/ligne/modifier/id/'.$id)->setMethod('post');
 
-		$listeInput['id_ligne'] = new Zend_Form_Element_Text('id_ligne');
-		$listeInput['id_aeroport_depart'] = new Zend_Form_Element_Text('id_aeroport_depart');
-		$listeInput['id_aeroport_arrivee'] = new Zend_Form_Element_Text('id_aeroport_arrivee');
-		$listeInput['ligne_periodicite'] = new Zend_Form_Element_Text('ligne_periodicite');
+		$listeInput['trigramme_aeroport_depart'] = new Zend_Form_Element_Select('trigramme_aeroport_depart');
+		$listeInput['trigramme_aeroport_arrivee'] = new Zend_Form_Element_Select('trigramme_aeroport_arrivee');
+		$listeInput['ligne_periodicite'] = new Zend_Form_Element_Select('ligne_periodicite');
 
-		$listeInput['id_ligne']->setLabel('Trigramme')
-						->addValidator(new Zend_Validate_Alpha())
-						->addValidator(new Zend_Validate_StringLength(array('min'=>3,'max'=>3)));
-		$listeInput['id_aeroport_depart']->setLabel('Nom')->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true)));
-		$listeInput['id_aeroport_arrivee']->setLabel('Nombre de terminaux')->addValidator(new Zend_Validate_Digits());
-		$listeInput['ligne_periodicite']->setLabel('Longueur maximale de piste (en m)')->addValidator(new Zend_Validate_Digits());
+		$listeInput['trigramme_aeroport_depart']->setLabel('Aéroport de départ')
+										->addValidator(new Zend_Validate_Alpha())
+										->addValidator(new Zend_Validate_StringLength(array('max' => 3, 'min'=>3)));
+		$listeInput['trigramme_aeroport_arrivee']->setLabel('Aéroport d\'arrive')
+										->addValidator(new Zend_Validate_Alpha())
+										->addValidator(new Zend_Validate_StringLength(array('max' => 3, 'min'=>3)));
 
-		$dataOld = $tableligne->getligne($id);
+		foreach ($listeAeroports as $aeroport) {
+			$listeInput['trigramme_aeroport_depart']->addMultiOptions(array($aeroport['aeroport_trigramme'] => $aeroport['aeroport_nom']));
+			$listeInput['trigramme_aeroport_arrivee']->addMultiOptions(array($aeroport['aeroport_trigramme'] => $aeroport['aeroport_nom']));
+		}
+
+		$listeInput['ligne_periodicite']->setLabel('Périodicité')
+										->addValidator(new Zend_Validate_Alpha())
+										->addMultiOptions(array('journaliere' => 'Journalier', 'hebdomadaire' => 'Hebdomadaire', 'mensuelle' => 'Mensuelle', 'unique' => 'Unique'));
 
 		foreach ($listeInput as $key=>$value) {
-			$value->setRequired(true)->setValue($dataOld[$key]);
+			$value->setRequired(true)->setValue($dataLigne[$key]);
 			$form->addElement($value);
 		}
 
@@ -113,7 +120,7 @@ class LigneController extends Extension_Controller_Action
 			$post = $this->getRequest()->getPost();
 			if($form->isValid($post)) {
 				$data = $form->getValues();
-				$tableligne->editligne($id,$data);
+				$tableLigne->editLigne($id,$data);
 				$this->_redirector->goToUrl('/ligne/');
 			}
 			else {
@@ -124,7 +131,7 @@ class LigneController extends Extension_Controller_Action
 			$this->view->form = $form;
 		}
 	}
-	
+
 	public function supprimerAction() {
 		$id = $this->getRequest()->getParam('id');
 		$tableligne = new Tligne;

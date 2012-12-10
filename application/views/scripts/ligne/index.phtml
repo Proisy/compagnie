@@ -1,25 +1,34 @@
-<?php 
-echo '<h2>Liste du catalogue de ligne</h2>
-	<br /><a href="/ligne/ajouter"><input type="button" value="Ajouter" /></a><br /><br />
+<h2>Liste du catalogue de ligne</h2>
+	<a href="/ligne/ajouter"><input type="button" value="Ajouter" /></a>
 <table class="Tabligne">
-	<tr>
-		<td>Numéro de ligne</td>
-		<td>Aeroport de départ</td>
-		<td>Aeroport d\'arrivée</td>
-		<td>Occurence</td>
-	</tr>';
-	foreach($this->listeLigne as $ligne) {
-		Zend_Debug::dump($ligne);
+	<thead>
+		<th>Numéro de ligne</th>
+		<th>Aeroport de départ</th>
+		<th>Aeroport d'arrivée</th>
+		<th>Occurence</th>
+	</thead>
+
+<?php
+
+foreach($this->listeLignes as $ligne) {
 	echo'<tr>
 		<td>'.$ligne['id_ligne'].'</td>
-		<td>'.$ligne['id_aeroport_depart'].'</td>
-		<td>'.$ligne['id_aeroport_arrivee'].'</td>
+		<td>'.$ligne['trigramme_depart']. ' - '. $ligne['aeroport_depart'] .'</td>
+		<td>'.$ligne['trigramme_depart']. ' - '. $ligne['aeroport_depart'] .'</td>
 		<td>'.$ligne['ligne_periodicite'].'</td>
-		<td class="modifier"><a href="/ligne/modifier/id/'.$ligne['id_ligne'].'"><img src="../img/modifier.png" class="modifier" /></a></td>
-		<td class="supprimer"><a href="/ligne/supprimer/id/'.$ligne['id_ligne'].'"><img src="../img/supprimer.png" class="supprimer" /></a></td>
+		<td class="modifier"><a href="/ligne/modifier/id/'.$ligne['id_ligne'].'"><img src="/img/modifier.png" class="modifier" /></a></td>
+		<td class="supprimer"><a href="/ligne/supprimer/id/'.$ligne['id_ligne'].'"><img src="/img/supprimer.png" class="supprimer" /></a></td>
 	</tr>';
 }
-echo '</table>';
-echo '<div class="pagination"> Page - ';
-	for($i = 0; $i <= $this->nbLigne; $i++) echo '<a href="/ligne/index?page='.($i+1).'">'.($i+1).'</a> -';
-echo '</div>';
+?>
+</table>
+
+<div class="pagination">
+	<p>Page - 
+	<?php 
+	for($i = 0; $i <= $this->nbPages; $i++) {
+		echo '<a href="/ligne/index/page/'.($i+1).'">'.($i+1).'</a> -';
+	}
+	?>
+	</p>
+</div>

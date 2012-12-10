@@ -12,7 +12,7 @@ class TLigne extends Zend_Db_Table_Abstract {
 	protected $_primary = 'id_ligne';
 
 	/**
-	 * Ajoute un ligne
+	 * Ajoute une ligne
 	 * @param array $data
 	 */
 	public function addLigne($data) {
@@ -24,7 +24,7 @@ class TLigne extends Zend_Db_Table_Abstract {
 	}
 
 	/**
-	 * Modifie un ligne
+	 * Modifie une ligne
 	 * @param int $id
 	 * @param array $data
 	 */
@@ -37,7 +37,7 @@ class TLigne extends Zend_Db_Table_Abstract {
 	}
 
 	/**
-	 * Supprime un ligne
+	 * Supprime une ligne
 	 * @param int $id
 	 */
 	public function deleteLigne($id) {
@@ -46,7 +46,7 @@ class TLigne extends Zend_Db_Table_Abstract {
 	}
 
 	/**
-	 * Récupère tous les ligne
+	 * Récupère tous les lignes
 	 * @param array $columns
 	 * @return array
 	 */
@@ -54,20 +54,30 @@ class TLigne extends Zend_Db_Table_Abstract {
 		$requete = $this->select()->from($this, $columns);
 		return $this->fetchAll($requete)->toArray();
 	}
-	public function getAllLigAerop($triD, $triA) {
-		$requete = $this->select()->from(array('l'=>$this->_name))
-								  ->setIntegrityCheck(false)
-								  ->join(array('a'=>'aeroport'), 'l.id_aeroport_depart = a.aeroport_trigramme', array('a.aeroport_nom'))
-								  //->join(array('a'=>'aeroport'), 'l.id_aeroport_arrivee = a.aeroport_trigramme', array('a.aeroport_nom'))
-								  ->where('a.aeroport_trigramme = ? ', $triD)
-								  ->where('a.aeroport_trigramme = ? ', $triA);
-								  echo $requete;exit();
+
+	/**
+	 * Récupère toutes les lignes et les aéroports correspondants
+	 * @return array
+	 */
+	public function getAllLignesFK() {
+		$requete = $this->select()->from(array('l'=>$this->_name), array('l.id_ligne','l.ligne_periodicite'))
+								->setIntegrityCheck(false)
+								->join(array('d'=>'aeroport'),
+									'd.aeroport_trigramme=l.trigramme_aeroport_depart', 
+									array('trigramme_depart'=>'d.aeroport_trigramme',
+										'aeroport_depart'=>'d.aeroport_nom')
+									)
+								->join(array('a'=>'aeroport'),
+									'a.aeroport_trigramme=l.trigramme_aeroport_arrivee' ,
+									array('trigramme_arrivee'=>'a.aeroport_trigramme',
+										'aeroport_arrivee'=>'a.aeroport_nom')
+									);
 		return $this->fetchAll($requete)->toArray();
 	}
 
 
 	/**
-	 * Récupère un ligne selon son id
+	 * Récupère une ligne selon son id
 	 * @param int $id
 	 * @param array $columns
 	 * @return array
@@ -79,7 +89,7 @@ class TLigne extends Zend_Db_Table_Abstract {
 	}
 
 	/**
-	 * Récupère $maxInt-$minInt lignes à partir du $minInt ligne
+	 * Récupère la n-ième page de lignes
 	 * @param int $minInt
 	 * @param int $maxInt
 	 * @param array $columns
@@ -87,12 +97,39 @@ class TLigne extends Zend_Db_Table_Abstract {
 	 */
 	public function getSomeLignes($page, $nbligne, $columns='*') {
 		$requete = $this->select()->setIntegrityCheck(false)
-								  ->from(array('l'=>$this->_name, $columns))
-								  ->join(array('a'=>'aeroport'), 'l.id_aeroport_depart = a.aeroport_trigramme', array('aeroport_nom'))
-								   ->limitPage($page,$nbligne);
+								->from(array('l'=>$this->_name, $columns))
+								->join(array('a'=>'aeroport'), 'l.id_aeroport_depart = a.aeroport_trigramme', array('aeroport_nom'))
+								->limitPage($page,$nbligne);
 		return $this->fetchAll($requete)->toArray();
 	}
 
+	/**
+	 * Récupère la n-ième page de lignes et les aéroports correspondants
+	 * @param  int $page    Numéro de page
+	 * @param  int $nbligne Nombre de lignes par page
+	 * @return array
+	 */
+	public function getSomeLignesFK($page, $nbligne) {
+		$requete = $this->select()->from(array('l'=>$this->_name), array('l.id_ligne','l.ligne_periodicite'))
+								->setIntegrityCheck(false)
+								->join(array('d'=>'aeroport'),
+									'd.aeroport_trigramme=l.trigramme_aeroport_depart', 
+									array('trigramme_depart'=>'d.aeroport_trigramme',
+										'aeroport_depart'=>'d.aeroport_nom')
+									)
+								->join(array('a'=>'aeroport'),
+									'a.aeroport_trigramme=l.trigramme_aeroport_arrivee' ,
+									array('trigramme_arrivee'=>'a.aeroport_trigramme',
+										'aeroport_arrivee'=>'a.aeroport_nom')
+									)
+								->limitPage($page,$nbligne);
+		return $this->fetchAll($requete)->toArray();
+	}
+
+	/**
+	 * Retourne le nombre de lignes en base de données
+	 * @return [type] [description]
+	 */
 	public function countLignes(){
 			$requete = $this->select()->from($this, array('count(*) as nbLignes'));
 			$data = $this->fetchAll($requete);
@@ -104,11 +141,33 @@ class TLigne extends Zend_Db_Table_Abstract {
 	 * @param array $data
 	 * @param array $columns
 	 * @return array
-	 *
-	 * @todo à refaire
 	 */
 	public function getLignesBy($data, $columns='*') {
 		$requete = $this->select()->from($this, $columns);
+		foreach ($data as $arr) {
+			$requete->where($arr['column']. ' ' .$arr['operator'] .' ?', $arr['value']);
+		}
+		return $this->fetchAll($requete)->toArray();
+	}
+
+	/**
+	 * Récupère les lignes et les aéroports correspondants en fonction des paramètres passés
+	 * @param  array $data		Paramètres de la recherche
+	 * @return array
+	 */
+	public function getLignesFKBy($data) {
+		$requete = $this->select()->from(array('l'=>$this->_name), array('l.id_ligne','l.ligne_periodicite'))
+								->setIntegrityCheck(false)
+								->join(array('d'=>'aeroport'),
+									'd.aeroport_trigramme=l.trigramme_aeroport_depart', 
+									array('trigramme_depart'=>'d.aeroport_trigramme',
+										'aeroport_depart'=>'d.aeroport_nom')
+									)
+								->join(array('a'=>'aeroport'),
+									'a.aeroport_trigramme=l.trigramme_aeroport_arrivee' ,
+									array('trigramme_arrivee'=>'a.aeroport_trigramme',
+										'aeroport_arrivee'=>'a.aeroport_nom')
+									);
 		foreach ($data as $arr) {
 			$requete->where($arr['column']. ' ' .$arr['operator'] .' ?', $arr['value']);
 		}
