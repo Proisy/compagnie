@@ -7,10 +7,6 @@ class DrhController extends Extension_Controller_Action
 	}
 	
 	public function indexAction(){
-		$this->_helper->actionStack('menu', 'drh', 'default', array());
-	}
-	
-	public function menuAction(){
-		$this->_helper->viewRenderer->setResponseSegment('menuDrh');
+
 	}
 }
