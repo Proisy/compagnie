@@ -4,28 +4,24 @@ echo '<h2>Liste des Vols</h2>
 <table class="TabVol">
 	<tr>
 		<td>Numéro Vol</td>
+		<td>Ligne</td>
 		<td>Avion</td>
 		<td>Pilote</td>
 		<td>Copilote</td>
-		<td>Information</td>
-		<td>date</td>
-		<td>depart prévu</td>
-		<td>arrivée prévue</td>
-		<td>Nom de la ligne</td>
+		<td>Départ prévu</td>
+		<td>Arrivée prévue</td>
 	</tr>';
 	foreach($this->listeVols as $vol) {
 	echo'<tr>
 		<td>'.$vol['id_vol'].'</td>
-		<td>'.$vol['immatriculation'].'</td>
-		<td>'.$vol['id_pilote'].'</td>
-		<td>'.$vol['id_copilote'].'</td>
-		<td>'.$vol['vol_information'].'</td>
-		<td>'.$vol['vol_date'].'</td>
+		<td><a href="/ligne/view/id/'.$vol['id_ligne'].'">'.$vol['aeroport_depart'].' - '.$vol['aeroport_arrivee'].'</a></td>
+		<td>'.$vol['avion_immatriculation'].'</td>
+		<td><a href="/user/view/id/'.$vol['id_pilote'].'">'.$vol['id_pilote'].'</a></td>
+		<td><a href="/user/view/id/'.$vol['id_copilote'].'">'.$vol['id_copilote'].'</a></td>
 		<td>'.$vol['vol_depart_prevu'].'</td>
 		<td>'.$vol['vol_arrivee_prevue'].'</td>
-		<td>'.$vol['id_ligne'].'</td>
-		<td class="modifier"><a href="/vols/modifier/id/'.$vol['id_vol'].'"><img src="../img/modifier.png" class="modifier" /></a></td>
-		<td class="supprimer"><a href="/vols/supprimer/id/'.$vol['id_vol'].'"><img src="../img/supprimer.png" class="supprimer" /></a></td>
+		<td class="modifier"><a href="/vol/modifier/id/'.$vol['id_vol'].'"><img src="../img/modifier.png" class="modifier" /></a></td>
+		<td class="supprimer"><a href="/vol/supprimer/id/'.$vol['id_vol'].'"><img src="../img/supprimer.png" class="supprimer" /></a></td>
 	</tr>';
 	}
 

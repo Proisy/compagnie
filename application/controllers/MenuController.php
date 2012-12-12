@@ -32,4 +32,8 @@ class MenuController extends Extension_Controller_Base {
 
 	}
 
+	public function planningAction() {
+		
+	}
+
 }

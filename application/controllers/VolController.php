@@ -10,16 +10,15 @@ class VolController extends Extension_Controller_Action
 		if(!isset($page)) {
 			$page = 1;
 		}
-		$tableVol = new TVol;		
-		$this->view->listeVols = $tableVol->getSomeVols($page,15);
-		$this->view->nbVols = (($tableVol->countVols())/15);
+		$tableVol = new TVol;
+		$this->view->listeVols = $tableVol->getSomeVolsFK($page,15);
+		$this->view->nbVols = ($tableVol->countVols())/15;
 	}
 
 	public function viewAction() {
 		$id = $this->getRequest()->getParam('id');
 		if(!isset($id)){
-			$redirector = $this->_helper->getHelper('redirector');
-			$redirector->goToUrl('/vol/');
+			$this->_redirector->goToUrl('/vol/');
 		}
 		else {
 			$tableVol = new TVol;
@@ -29,91 +28,98 @@ class VolController extends Extension_Controller_Action
 
 	public function ajouterAction() {
 		$form = new Zend_Form;
-		$tableVol = new TVol;
+
 		$tableUser = new TUser;
 		$tableLigne = new TLigne;
-		$tableAeroport = new TAeroport;
 		$tableAvion = new TAvion;
-		$pilote= $tableUser->getPilote();
-		$modele = $tableAvion->getAvMod();
-		$destination = $tableLigne->getAllLignes();
-		$heure = array();
-		$minute = array();
-		for($i=0; $i<24; $i++){
-			array_push($heure, $i);
+
+		$listePilotes = $tableUser->getAllPilotes(array('user_login','user_nom','user_prenom'));
+		$listeAvions = $tableAvion->getAllAvionsFK(array('avion_immatriculation'));
+		$listeLignes = $tableLigne->getAllLignesFK();
+
+		$form->setAction('/vol/ajouter/')->setMethod('post');
+
+		$listeInput['id_ligne'] = new Zend_Form_Element_Select('id_ligne');
+		$listeInput['avion_immatriculation'] = new Zend_Form_Element_Select('avion_immatriculation');
+		$listeInput['id_pilote'] = new Zend_Form_Element_Select('id_pilote');
+		$listeInput['id_copilote'] = new Zend_Form_Element_Select('id_copilote');
+		$listeInput['vol_date'] = new Zend_Form_Element_Text('vol_date');
+		$listeInput['heure_depart'] = new Zend_Form_Element_Text('heure_depart');
+		$listeInput['minute_depart'] = new Zend_Form_Element_Text('minute_depart');
+		$listeInput['heure_arrivee'] = new Zend_Form_Element_Text('heure_arrivee');
+		$listeInput['minute_arrivee'] = new Zend_Form_Element_Text('minute_arrivee');
+
+		$listeInput['id_ligne']->setLabel('Ligne');
+
+		foreach ($listeLignes as $ligne) {
+			$listeInput['id_ligne']->addMultiOptions(array(
+				$ligne['id_ligne'] => $ligne['aeroport_depart'].' - '.$ligne['aeroport_arrivee'])
+			);
 		}
-		for($i=0; $i<60; $i++){
-			array_push($minute, $i);
+
+		$listeInput['avion_immatriculation']->setLabel('Avion');
+		foreach ($listeAvions as $avion) {
+			$listeInput['avion_immatriculation']->addMultiOptions(array(
+				$avion['avion_immatriculation'] => $avion['modele_marque'].' '.$avion['modele_reference'].' - '.$avion['avion_immatriculation']
+			));
 		}
 
-		$form->setAction('/vol/ajouter/')->setMethod('post')->setAttrib('class', 'volAjouter');
+		$listeInput['id_pilote']->setLabel('Pilote');
+		$listeInput['id_copilote']->setLabel('Copilote');
+		
+		foreach ($listePilotes as $pilote) {
+			$listeInput['id_pilote']->addMultiOptions(array(
+				$pilote['user_login'] => $pilote['user_nom'].' '.$pilote['user_prenom']
+			));
+			$listeInput['id_copilote']->addMultiOptions(array(
+				$pilote['user_login'] => $pilote['user_nom'].' '.$pilote['user_prenom']
+			));
+		}
 
-			$listeInput['id_ligne'] = new Zend_Form_Element_Select('id_ligne');
-			$listeInput['avion_immatriculation'] = new Zend_Form_Element_Select('avion_immatriculation');
-			$listeInput['id_pilote'] = new Zend_Form_Element_Select('id_pilote');
-			$listeInput['id_copilote'] = new Zend_Form_Element_Select('id_copilote');
-			$listeInput['vol_information'] = new Zend_Form_Element_Text('vol_information');
-			$listeInput['vol_date'] = new Zend_Form_Element_Text('vol_date');
-			$listeInput['heure_depart'] = new Zend_Form_Element_Select('heure_depart');
-			$listeInput['minute_depart'] = new Zend_Form_Element_Select('minute_depart');
-			$listeInput['heure_arrivee'] = new Zend_Form_Element_Select('heure_arrivee');
-			$listeInput['minute_arrivee'] = new Zend_Form_Element_Select('minute_arrivee');
+		$listeInput['vol_date']->setLabel('date du vol')
+							->setAttrib('id','datepicker')
+							->setAttrib('size','8');
+		$listeInput['heure_depart']->setLabel('Heure de départ (heure/minute)')
+								->addValidator(new Zend_Validate_Between(array('min'=>0,'max'=>24)))
+								->setAttrib('size','2');
+		$listeInput['minute_depart']->removeDecorator('Label')
+									->addValidator(new Zend_Validate_Between(array('min'=>0,'max'=>59)))
+									->setAttrib('size','2');
+		$listeInput['heure_arrivee']->setLabel('Heure d\'arrivee (heure/minute)')
+									->addValidator(new Zend_Validate_Between(array('min'=>0,'max'=>24)))
+									->setAttrib('size','2');
+		$listeInput['minute_arrivee']->removeDecorator('Label')
+									->addValidator(new Zend_Validate_Between(array('min'=>0,'max'=>59)))
+									->setAttrib('size','2');
 
-			$listeInput['id_ligne']->setLabel('Destination');
-			foreach ($destination as $key => $value) {
-				$nomD = $tableAeroport->getAeroport($value['id_aeroport_depart']);
-				$nomA = $tableAeroport->getAeroport($value['id_aeroport_arrivee']);
-				$listeInput['id_ligne']->addMultiOptions(array($value['id_ligne'] => $nomD['aeroport_nom'].' - '.$nomA['aeroport_nom']));
-			}
-			$listeInput['avion_immatriculation']->setLabel('Avion');
-			foreach ($modele as $key => $value) {
-				$listeInput['avion_immatriculation']->addMultiOptions(array($value['id_modele'] => $value['modele_marque'].' '.$value['modele_reference'].' - '.$value['avion_immatriculation']));
-			}
-			$listeInput['id_pilote']->setLabel('nom du pilote');
-			$listeInput['id_copilote']->setLabel('nom du copilote');
-			
-			foreach ($pilote as $key => $value) {
-				$listeInput['id_pilote']->addMultiOptions(array($value['id_pilote'] => $value['user_nom'].' '.$value['user_prenom']));    
-	    		$listeInput['id_copilote']->addMultiOptions(array($value['id_pilote'] => $value['user_nom'].' '.$value['user_prenom']));
-	    	}
-
-			$listeInput['vol_information']->setLabel('information du vol');
-			$listeInput['vol_date']->setLabel('date du vol')
-								   ->setAttrib('id','datepicker');
-			$listeInput['heure_depart']->setLabel('Heure de départ (heure/minute)')
-									   ->addMultiOptions($heure);
-			$listeInput['minute_depart']->addMultiOptions($minute)
-										->removeDecorator('Label');
-			$listeInput['heure_arrivee']->setLabel('Heure d\'arrivee (heure/minute)')
-										->addMultiOptions($heure);
-			$listeInput['minute_arrivee']->removeDecorator('Label')
-										 ->addMultiOptions($minute);
-			$dateDepart = new Zend_Date();
-			$dateArrivee = new Zend_Date();
-			// Affecter une nouvelle date
-			$dateDepart->set(''.$listeInput['heure_depart'].':'.$listeInput['minute_depart'].':00',Zend_Date::TIMES);
-			$dateArrivee->set(''.$listeInput['heure_arrivee'].':'.$listeInput['minute_arrivee'].':00',Zend_Date::TIMES);
-			unset($listeInput['heure_depart']);
-			unset($listeInput['minute_depart']);
-			unset($listeInput['heure_arrivee']);
-			unset($listeInput['minute_arrivee']);
-			$listeInput['id_aeroport_depart'] = $dateDepart;
-			//Zend_Debug::dump($listeInput['id_aeroport_depart']);exit();
-			$listeInput['id_aeroport_arrivee'] = $dateArrivee;
-			foreach ($listeInput as $key=>$value) {
-				$value->setRequired(true);
-				$form->addElement($value);
-			}
+		foreach ($listeInput as $element) {
+			$element->setRequired(true);
+			$form->addElement($element);
+		}
 
 		$form->addElement(new Zend_Form_Element_Submit('Valider'));
 
 		if($this->getRequest()->isPost()) {
+			$tableVol = new TVol;
 			$post = $this->getRequest()->getPost();
 			if($form->isValid($post)) {
 				$data = $form->getValues();
-				//Modification de l'heure.tableVol
-				$unlink->addVol($data);
-				$this->_redirector->goToUrl('/aeroport/');
+
+				$tmp = explode('/', $data['vol_date']);
+				$data['vol_date'] = $tmp[2].'-'.$tmp[1].'-'.$tmp[0];
+
+				$data['vol_depart_prevu'] = $data['vol_date'].' '.$data['heure_depart'].':'.$data['minute_depart'].':00';
+				$data['vol_arrivee_prevue'] = $data['vol_date'].' '.$data['heure_arrivee'].':'.$data['minute_arrivee'].':00';
+				$data['vol_arrivee_effective'] = $data['vol_arrivee_prevue'];
+
+				unset($data['heure_depart']);
+				unset($data['minute_depart']);
+				unset($data['heure_arrivee']);
+				unset($data['minute_arrivee']);
+				unset($data['vol_date']);
+
+				$tableVol->addVol($data);
+				$this->_redirector->goToUrl('/vol');
 			}
 			else {
 				$this->view->form = $form;

@@ -110,10 +110,13 @@ class TAvion extends Zend_Db_Table_Abstract {
 		return $this->fetchAll($requete)->toArray();
 	}
 
-	public function getAvMod(){
-		$requete = $this->select()->from(array('av'=>$this->_name))
-								  ->setIntegrityCheck(false)
-								  ->join(array('mod'=>'modele'), 'av.id_modele = mod.id_modele');
+	public function getAllAvionsFK($columns='*'){
+		$requete = $this->select()->from(array('a'=>$this->_name), $columns)
+								->setIntegrityCheck(false)
+								->join(array('m'=>'modele'),
+									'a.id_modele = m.id_modele',
+									array('m.modele_marque','m.modele_reference')
+								);
 		return $this->fetchAll($requete)->toArray();						  
 	}
 }

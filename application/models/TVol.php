@@ -12,12 +12,12 @@
  */
 class TVol extends Zend_Db_Table_Abstract {
 
-	protected $_name = 'vols';
+	protected $_name = 'vol';
 	protected $_primary = 'id_vol';
 
 	/**
 	 * Ajoute un vol
-	 * @param array $data
+	 * @param array 	$data
 	 */
 	public function addVol($data) {
 		$vol = $this->createRow();
@@ -29,8 +29,8 @@ class TVol extends Zend_Db_Table_Abstract {
 
 	/**
 	 * Modifie un vol
-	 * @param int $id
-	 * @param array $data
+	 * @param int 		$id
+	 * @param array 	$data
 	 */
 	public function editVol($id, $data) {
 		$vol = $this->find($id)->current();
@@ -42,7 +42,7 @@ class TVol extends Zend_Db_Table_Abstract {
 
 	/**
 	 * Supprime un vol
-	 * @param int $id
+	 * @param int 		$id
 	 */
 	public function deleteVol($id) {
 		$vol = $this->find($id)->current();
@@ -51,7 +51,7 @@ class TVol extends Zend_Db_Table_Abstract {
 
 	/**
 	 * Récupère tous les vol
-	 * @param array $columns
+	 * @param array 	$columns
 	 * @return array
 	 */
 	public function getAllVols($columns='*') {
@@ -61,8 +61,8 @@ class TVol extends Zend_Db_Table_Abstract {
 
 	/**
 	 * Récupère un vol selon son id
-	 * @param int $id
-	 * @param array $columns
+	 * @param int 		$id
+	 * @param array 	$columns
 	 * @return array
 	 */
 	public function getVol($id, $columns='*') {
@@ -73,9 +73,9 @@ class TVol extends Zend_Db_Table_Abstract {
 
 	/**
 	 * Récupère $maxInt-$minInt vols à partir du $minInt vol
-	 * @param int $minInt
-	 * @param int $maxInt
-	 * @param array $columns
+	 * @param int 		$minInt
+	 * @param int 		$maxInt
+	 * @param array 	$columns
 	 * @return array
 	 */
 	public function getSomeVols($page, $nbVol, $columns='*') {
@@ -83,6 +83,38 @@ class TVol extends Zend_Db_Table_Abstract {
 		return $this->fetchAll($requete)->toArray();
 	}
 
+	/**
+	 * Récupère certains avions et les données liées
+	 * @param  int 		$page
+	 * @param  int 		$nbVols
+	 * @return array
+	 */
+	public function getSomeVolsFK($page, $nbVols) {
+		$requete = $this->select()
+						->from(array('v'=>$this->_name))
+						->setIntegrityCheck(false)
+						->join(array('l'=>'ligne'),
+							'l.id_ligne=v.id_ligne', 
+							array('l.trigramme_aeroport_depart', 'l.trigramme_aeroport_arrivee')
+							)
+						->join(array('d'=>'aeroport'),
+							'd.aeroport_trigramme=l.trigramme_aeroport_depart', 
+							array('trigramme_depart'=>'d.aeroport_trigramme',
+								'aeroport_depart'=>'d.aeroport_nom')
+							)
+						->join(array('a'=>'aeroport'),
+							'a.aeroport_trigramme=l.trigramme_aeroport_arrivee' ,
+							array('trigramme_arrivee'=>'a.aeroport_trigramme',
+								'aeroport_arrivee'=>'a.aeroport_nom')
+							)
+						->limitPage($page,$nbVols);
+		return $this->fetchAll($requete)->toArray();
+	}
+
+	/**
+	 * Récupère le nombre de vols
+	 * @return int
+	 */
 	public function countVols(){
 			$requete = $this->select()->from($this, array('count(*) as nbVols'));
 			$data = $this->fetchAll($requete);
